@@ -16,10 +16,8 @@ ok('mostra estado vazio no primeiro acesso', !!doc.querySelector('.vazio'));
 
 // cadastra um lead com acento e apóstrofo
 doc.getElementById('l-nome').value = "Márcia D'Ávila";
-doc.getElementById('l-perfume').value = 'Dior Sauvage';
-doc.getElementById('l-familia').value = 'ambar';
 clicar(doc, '[data-acao="add-lead"]');
-ok('cadastra lead só com nome e perfume', doc.querySelectorAll('.card').length === 1);
+ok('cadastra lead só com o nome', doc.querySelectorAll('.card').length === 1);
 ok('preserva acento e apóstrofo', doc.querySelector('.nome').textContent === "Márcia D'Ávila");
 
 // marca duas etapas fora de ordem (pulando a primeira)
