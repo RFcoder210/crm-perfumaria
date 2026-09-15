@@ -1,0 +1,12 @@
+{
+  "name": "crm-perfumaria",
+  "version": "0.1.0",
+  "description": "Controle de leads e vendas de perfumes.",
+  "private": true,
+  "scripts": {
+    "test": "node teste.js"
+  },
+  "devDependencies": {
+    "jsdom": "^24.0.0"
+  }
+}

@@ -1,0 +1,775 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Controle de leads e vendas de perfumes.">
+<meta name="theme-color" content="#4A2545">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Perfumaria">
+<title>Perfumaria — controle de vendas</title>
+<style>
+  html, body { margin: 0; padding: 0; background: #F4F4F8; min-height: 100%; }
+</style>
+</head>
+<body>
+<div id="app">
+  <div class="boot" id="boot">Carregando seus dados…</div>
+</div>
+
+<style>
+  :root {
+    --ink: #17161C;
+    --muted: #6B6975;
+    --line: #E3E2EA;
+    --surface: #F4F4F8;
+    --card: #FFFFFF;
+    --plum: #4A2545;
+    --gold: #A8842F;
+    --danger: #A6342E;
+    --ok: #2F6B4F;
+    --radius: 10px;
+    --fam-floral: #C45C8E;
+    --fam-citrico: #C79318;
+    --fam-amadeirado: #8A5A3B;
+    --fam-ambar: #B5581F;
+    --fam-fougere: #4E8C63;
+    --fam-chipre: #6E7B4A;
+    --fam-aquatico: #3B7CA5;
+    --fam-gourmand: #9B5A83;
+    --fam-none: #9A98A5;
+  }
+
+  #app {
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    color: var(--ink);
+    background: var(--surface);
+    padding: 20px 16px 40px;
+    line-height: 1.45;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  #app * { box-sizing: border-box; }
+
+  .boot {
+    padding: 40px 0;
+    text-align: center;
+    color: var(--muted);
+    font-size: 14px;
+  }
+
+  .wrap { max-width: 940px; margin: 0 auto; }
+
+  /* ---------- cabeçalho ---------- */
+  .head {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 16px;
+    flex-wrap: wrap;
+    padding-bottom: 14px;
+    border-bottom: 1px solid var(--line);
+  }
+  .brand h1 {
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 26px;
+    font-weight: 400;
+    letter-spacing: -0.01em;
+    margin: 0;
+  }
+  .brand .eyebrow {
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    font-size: 10px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin: 0 0 4px;
+  }
+  .stats { display: flex; gap: 20px; }
+  .stat .n {
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    font-size: 20px;
+    display: block;
+    line-height: 1.1;
+  }
+  .stat .l {
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  /* ---------- abas ---------- */
+  .tabs { display: flex; gap: 4px; margin: 16px 0 14px; }
+  .tab {
+    border: 1px solid var(--line);
+    background: transparent;
+    color: var(--muted);
+    padding: 8px 16px;
+    border-radius: 999px;
+    font-size: 13px;
+    font-family: inherit;
+    cursor: pointer;
+  }
+  .tab[aria-selected="true"] {
+    background: var(--plum);
+    border-color: var(--plum);
+    color: #fff;
+  }
+
+  /* ---------- formulário ---------- */
+  .panel {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 16px;
+    margin-bottom: 16px;
+  }
+  .panel h2 {
+    font-size: 12px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin: 0 0 12px;
+    font-weight: 600;
+  }
+  .grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
+  .field { display: flex; flex-direction: column; gap: 4px; }
+  .field.span2 { grid-column: span 2; }
+  .field label {
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: 0.02em;
+  }
+  .field input, .field select, .field textarea {
+    font-family: inherit;
+    font-size: 14px;
+    color: var(--ink);
+    padding: 8px 10px;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    background: #fff;
+    width: 100%;
+  }
+  .field input:focus-visible, .field select:focus-visible, .field textarea:focus-visible {
+    outline: 2px solid var(--plum);
+    outline-offset: 1px;
+  }
+  .actions { display: flex; gap: 8px; margin-top: 12px; flex-wrap: wrap; }
+
+  button { font-family: inherit; cursor: pointer; }
+  .btn {
+    border: 1px solid var(--plum);
+    background: var(--plum);
+    color: #fff;
+    padding: 9px 18px;
+    border-radius: 8px;
+    font-size: 13px;
+  }
+  .btn.ghost { background: transparent; color: var(--plum); }
+  .btn.quiet {
+    background: transparent;
+    color: var(--muted);
+    border-color: var(--line);
+  }
+  .btn:focus-visible, .tab:focus-visible, .dot:focus-visible, .link:focus-visible {
+    outline: 2px solid var(--gold);
+    outline-offset: 2px;
+  }
+
+  /* ---------- barra de busca ---------- */
+  .bar { display: flex; gap: 8px; align-items: center; margin-bottom: 12px; flex-wrap: wrap; }
+  .bar input[type="search"] {
+    flex: 1;
+    min-width: 180px;
+    font-family: inherit;
+    font-size: 14px;
+    padding: 9px 12px;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    background: #fff;
+  }
+  .toggle { display: flex; align-items: center; gap: 6px; font-size: 13px; color: var(--muted); }
+
+  /* ---------- cartão de lead ---------- */
+  .card {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-left: 3px solid var(--fam);
+    border-radius: var(--radius);
+    padding: 14px 16px;
+    margin-bottom: 10px;
+  }
+  .card.done { opacity: 0.72; }
+  .card-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+  .nome { font-size: 16px; font-weight: 600; margin: 0; }
+  .meta { font-size: 13px; color: var(--muted); margin: 2px 0 0; }
+  .meta .sep { opacity: 0.4; padding: 0 6px; }
+  .chip {
+    display: inline-block;
+    font-size: 11px;
+    letter-spacing: 0.04em;
+    padding: 2px 9px;
+    border-radius: 999px;
+    color: #fff;
+    background: var(--fam);
+    vertical-align: 1px;
+  }
+  .link { color: var(--plum); text-decoration: none; border-bottom: 1px solid rgba(74,37,69,.3); }
+  .card-btns { display: flex; gap: 10px; }
+  .mini {
+    background: none;
+    border: none;
+    padding: 0;
+    font-size: 12px;
+    color: var(--muted);
+    text-decoration: underline;
+  }
+  .mini.del { color: var(--danger); }
+
+  /* ---------- trilha do funil (elemento-assinatura) ---------- */
+  .trilha {
+    display: flex;
+    margin-top: 14px;
+    border-top: 1px dashed var(--line);
+    padding-top: 12px;
+    gap: 2px;
+  }
+  .step { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 6px; }
+  .dot {
+    width: 100%;
+    height: 8px;
+    border-radius: 3px;
+    border: 1px solid var(--fam);
+    background: transparent;
+    padding: 0;
+    transition: background .18s ease;
+  }
+  .dot[aria-pressed="true"] { background: var(--fam); }
+  .dot.next { border-style: dashed; }
+  .step span {
+    font-size: 9.5px;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--muted);
+    text-align: center;
+  }
+  .step.on span { color: var(--ink); }
+  .converter { margin-top: 12px; }
+  .selo {
+    display: inline-block;
+    margin-top: 10px;
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ok);
+  }
+
+  /* ---------- tabela de vendas ---------- */
+  table { width: 100%; border-collapse: collapse; }
+  thead th {
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+    text-align: left;
+    font-weight: 600;
+    padding: 0 10px 8px 0;
+    border-bottom: 1px solid var(--line);
+  }
+  tbody td {
+    padding: 11px 10px 11px 0;
+    border-bottom: 1px solid var(--line);
+    font-size: 14px;
+    vertical-align: middle;
+  }
+  td.num, th.num {
+    text-align: right;
+    padding-right: 0;
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    font-size: 13px;
+  }
+  .tabela-wrap { overflow-x: auto; }
+
+  .vazio {
+    text-align: center;
+    padding: 34px 20px;
+    color: var(--muted);
+    font-size: 14px;
+    background: var(--card);
+    border: 1px dashed var(--line);
+    border-radius: var(--radius);
+  }
+  .rodape {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-top: 20px;
+    padding-top: 14px;
+    border-top: 1px solid var(--line);
+    font-size: 12px;
+    color: var(--muted);
+  }
+  .aviso {
+    background: #FCF3E8;
+    border: 1px solid #E8D3B4;
+    color: #7A5218;
+    padding: 10px 12px;
+    border-radius: 8px;
+    font-size: 13px;
+    margin-bottom: 14px;
+  }
+
+  @media (max-width: 640px) {
+    .grid { grid-template-columns: repeat(2, 1fr); }
+    .field.span2 { grid-column: span 2; }
+    .stats { gap: 14px; }
+    .step span { font-size: 8.5px; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    * { transition: none !important; }
+  }
+</style>
+
+<script>
+(function () {
+  const CHAVE = 'crm-perfumes:dados';
+
+  const FAMILIAS = [
+    { id: 'floral',      nome: 'Floral',      cor: 'var(--fam-floral)' },
+    { id: 'citrico',     nome: 'Cítrico',     cor: 'var(--fam-citrico)' },
+    { id: 'amadeirado',  nome: 'Amadeirado',  cor: 'var(--fam-amadeirado)' },
+    { id: 'ambar',       nome: 'Âmbar',       cor: 'var(--fam-ambar)' },
+    { id: 'fougere',     nome: 'Fougère',     cor: 'var(--fam-fougere)' },
+    { id: 'chipre',      nome: 'Chipre',      cor: 'var(--fam-chipre)' },
+    { id: 'aquatico',    nome: 'Aquático',    cor: 'var(--fam-aquatico)' },
+    { id: 'gourmand',    nome: 'Gourmand',    cor: 'var(--fam-gourmand)' }
+  ];
+
+  const ETAPAS = [
+    { id: 'msg1',     curto: 'Msg 1',     longo: 'Mandei mensagem' },
+    { id: 'msg2',     curto: 'Msg 2',     longo: 'Mandei de novo' },
+    { id: 'encomenda', curto: 'Encomenda', longo: 'Encomendou' },
+    { id: 'pago',     curto: 'Pago',      longo: 'Pagou' },
+    { id: 'entregue', curto: 'Entregue',  longo: 'Recebeu' },
+    { id: 'recompra', curto: 'Recompra',  longo: 'Recomprou' }
+  ];
+
+  let estado = { leads: [], vendas: [] };
+  let aba = 'leads';
+  let busca = '';
+  let soPendentes = false;
+  let editando = null; // {tipo, id}
+  let avisoTexto = '';
+  let bloqueado = false; // impede gravar por cima de dados que não puderam ser lidos
+
+  /* ---------- utilidades ---------- */
+  const esc = (s) => String(s == null ? '' : s)
+    .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+
+  const id = () => Date.now().toString(36) + Math.random().toString(36).slice(2, 7);
+
+  function hoje() {
+    const d = new Date();
+    d.setMinutes(d.getMinutes() - d.getTimezoneOffset());
+    return d.toISOString().slice(0, 10);
+  }
+
+  function dataBr(iso) {
+    if (!iso) return '—';
+    const p = iso.split('-');
+    return p.length === 3 ? p[2] + '/' + p[1] + '/' + p[0] : iso;
+  }
+
+  function fam(idf) {
+    return FAMILIAS.find(f => f.id === idf) || { id: '', nome: 'Sem família', cor: 'var(--fam-none)' };
+  }
+
+  const moeda = (v) => (Number(v) || 0).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+
+  function soDigitos(t) { return String(t || '').replace(/\D/g, ''); }
+
+  /* ---------- persistência ---------- */
+  // Os dados ficam no navegador do próprio usuário, em localStorage.
+  function carregar() {
+    let bruto = null;
+    try {
+      bruto = localStorage.getItem(CHAVE);
+    } catch (e) {
+      avisoTexto = 'Este navegador está bloqueando o armazenamento de dados. O sistema funciona, mas nada será salvo. Verifique se a navegação anônima está ativada.';
+      return;
+    }
+    if (!bruto) return; // Primeira abertura: ainda não existe registro salvo.
+    try {
+      const d = JSON.parse(bruto);
+      estado.leads = Array.isArray(d.leads) ? d.leads : [];
+      estado.vendas = Array.isArray(d.vendas) ? d.vendas : [];
+    } catch (e) {
+      avisoTexto = 'Os dados salvos estão ilegíveis e não foram carregados. Nada foi apagado: antes de cadastrar qualquer coisa nova, procure ajuda para tentar recuperá-los.';
+      bloqueado = true;
+    }
+  }
+
+  function salvar() {
+    if (bloqueado) return; // Não sobrescreve um arquivo que pode ser recuperável.
+    try {
+      localStorage.setItem(CHAVE, JSON.stringify(estado));
+      if (avisoTexto) { avisoTexto = ''; desenhar(); }
+    } catch (e) {
+      avisoTexto = 'Não foi possível gravar a última alteração. Ela aparece na tela, mas pode se perder ao fechar a página. Exporte o CSV agora para não perder nada.';
+      desenhar();
+    }
+  }
+
+  /* ---------- listas filtradas ---------- */
+  function leadsVisiveis() {
+    const t = busca.trim().toLowerCase();
+    return estado.leads.filter(l => {
+      if (soPendentes && l.etapas.entregue) return false;
+      if (!t) return true;
+      return [l.nome, l.perfume, l.telefone, fam(l.familia).nome, l.obs]
+        .join(' ').toLowerCase().includes(t);
+    }).sort((a, b) => (b.data || '').localeCompare(a.data || ''));
+  }
+
+  function vendasVisiveis() {
+    const t = busca.trim().toLowerCase();
+    return estado.vendas.filter(v => {
+      if (!t) return true;
+      return [v.nome, v.perfume, fam(v.familia).nome].join(' ').toLowerCase().includes(t);
+    }).sort((a, b) => (b.data || '').localeCompare(a.data || ''));
+  }
+
+  /* ---------- blocos de HTML ---------- */
+  function opcoesFamilia(sel) {
+    return '<option value="">—</option>' + FAMILIAS.map(f =>
+      '<option value="' + f.id + '"' + (f.id === sel ? ' selected' : '') + '>' + f.nome + '</option>'
+    ).join('');
+  }
+
+  function formLead() {
+    const e = editando && editando.tipo === 'lead'
+      ? estado.leads.find(l => l.id === editando.id) : null;
+    return '' +
+      '<section class="panel">' +
+        '<h2>' + (e ? 'Editando lead' : 'Novo lead') + '</h2>' +
+        '<div class="grid">' +
+          '<div class="field span2"><label for="l-nome">Nome</label><input id="l-nome" value="' + esc(e ? e.nome : '') + '" placeholder="Como você chama a pessoa"></div>' +
+          '<div class="field"><label for="l-tel">Telefone</label><input id="l-tel" value="' + esc(e ? e.telefone : '') + '" placeholder="61 90000-0000"></div>' +
+          '<div class="field"><label for="l-data">Data do interesse</label><input id="l-data" type="date" value="' + esc(e ? e.data : hoje()) + '"></div>' +
+          '<div class="field span2"><label for="l-perfume">Perfume de interesse</label><input id="l-perfume" value="' + esc(e ? e.perfume : '') + '" placeholder="Marca e nome"></div>' +
+          '<div class="field"><label for="l-familia">Família olfativa</label><select id="l-familia">' + opcoesFamilia(e ? e.familia : '') + '</select></div>' +
+          '<div class="field"><label for="l-obs">Observação</label><input id="l-obs" value="' + esc(e ? e.obs : '') + '" placeholder="Tamanho, preço combinado…"></div>' +
+        '</div>' +
+        '<div class="actions">' +
+          '<button class="btn" data-acao="' + (e ? 'salvar-lead' : 'add-lead') + '">' + (e ? 'Salvar alterações' : 'Adicionar lead') + '</button>' +
+          (e ? '<button class="btn quiet" data-acao="cancelar">Cancelar</button>' : '') +
+        '</div>' +
+      '</section>';
+  }
+
+  function formVenda() {
+    const e = editando && editando.tipo === 'venda'
+      ? estado.vendas.find(v => v.id === editando.id) : null;
+    return '' +
+      '<section class="panel">' +
+        '<h2>' + (e ? 'Editando venda' : 'Nova venda') + '</h2>' +
+        '<div class="grid">' +
+          '<div class="field span2"><label for="v-nome">Cliente</label><input id="v-nome" value="' + esc(e ? e.nome : '') + '" placeholder="Nome de quem comprou"></div>' +
+          '<div class="field span2"><label for="v-perfume">Perfume comprado</label><input id="v-perfume" value="' + esc(e ? e.perfume : '') + '" placeholder="Marca e nome"></div>' +
+          '<div class="field"><label for="v-familia">Família olfativa</label><select id="v-familia">' + opcoesFamilia(e ? e.familia : '') + '</select></div>' +
+          '<div class="field"><label for="v-data">Data da compra</label><input id="v-data" type="date" value="' + esc(e ? e.data : hoje()) + '"></div>' +
+          '<div class="field"><label for="v-valor">Valor (R$)</label><input id="v-valor" type="number" step="0.01" min="0" value="' + esc(e ? e.valor : '') + '" placeholder="opcional"></div>' +
+          '<div class="field"><label for="v-obs">Observação</label><input id="v-obs" value="' + esc(e ? e.obs : '') + '" placeholder="Forma de pagamento, entrega…"></div>' +
+        '</div>' +
+        '<div class="actions">' +
+          '<button class="btn" data-acao="' + (e ? 'salvar-venda' : 'add-venda') + '">' + (e ? 'Salvar alterações' : 'Registrar venda') + '</button>' +
+          (e ? '<button class="btn quiet" data-acao="cancelar">Cancelar</button>' : '') +
+        '</div>' +
+      '</section>';
+  }
+
+  function cartaoLead(l) {
+    const f = fam(l.familia);
+    const feitas = ETAPAS.filter(e => l.etapas[e.id]).length;
+    const proxima = ETAPAS.find(e => !l.etapas[e.id]);
+    const tel = soDigitos(l.telefone);
+    const wa = tel ? (tel.length <= 11 ? '55' + tel : tel) : '';
+
+    const trilha = ETAPAS.map(e => {
+      const on = !!l.etapas[e.id];
+      const eProx = proxima && proxima.id === e.id;
+      return '<div class="step' + (on ? ' on' : '') + '">' +
+        '<button class="dot' + (eProx ? ' next' : '') + '" aria-pressed="' + on + '" ' +
+          'aria-label="' + e.longo + '" title="' + e.longo + '" ' +
+          'data-acao="etapa" data-id="' + l.id + '" data-etapa="' + e.id + '"></button>' +
+        '<span>' + e.curto + '</span></div>';
+    }).join('');
+
+    return '<article class="card' + (l.etapas.entregue ? ' done' : '') + '" style="--fam:' + f.cor + '">' +
+      '<div class="card-top">' +
+        '<div>' +
+          '<p class="nome">' + esc(l.nome) + '</p>' +
+          '<p class="meta">' +
+            (l.perfume ? esc(l.perfume) : 'Perfume não informado') +
+            '<span class="sep">·</span><span class="chip">' + f.nome + '</span>' +
+            '<span class="sep">·</span>' + dataBr(l.data) +
+            (l.telefone ? '<span class="sep">·</span><a class="link" target="_blank" rel="noopener" href="https://wa.me/' + wa + '">' + esc(l.telefone) + '</a>' : '') +
+          '</p>' +
+          (l.obs ? '<p class="meta">' + esc(l.obs) + '</p>' : '') +
+        '</div>' +
+        '<div class="card-btns">' +
+          '<button class="mini" data-acao="editar-lead" data-id="' + l.id + '">Editar</button>' +
+          '<button class="mini del" data-acao="excluir-lead" data-id="' + l.id + '">Excluir</button>' +
+        '</div>' +
+      '</div>' +
+      '<div class="trilha">' + trilha + '</div>' +
+      (l.etapas.entregue && !l.convertido
+        ? '<div class="converter"><button class="btn ghost" data-acao="converter" data-id="' + l.id + '">Lançar em vendas</button></div>'
+        : '') +
+      (l.convertido ? '<span class="selo">Venda registrada</span>' : '') +
+      (feitas === 0 ? '' : '') +
+    '</article>';
+  }
+
+  function tabelaVendas(lista) {
+    return '<div class="panel"><div class="tabela-wrap"><table>' +
+      '<thead><tr><th>Cliente</th><th>Perfume</th><th>Família</th><th>Data</th><th class="num">Valor</th><th class="num">Ações</th></tr></thead>' +
+      '<tbody>' + lista.map(v => {
+        const f = fam(v.familia);
+        return '<tr>' +
+          '<td>' + esc(v.nome) + (v.obs ? '<br><span class="meta">' + esc(v.obs) + '</span>' : '') + '</td>' +
+          '<td>' + esc(v.perfume) + '</td>' +
+          '<td><span class="chip" style="--fam:' + f.cor + ';background:' + f.cor + '">' + f.nome + '</span></td>' +
+          '<td>' + dataBr(v.data) + '</td>' +
+          '<td class="num">' + (v.valor ? moeda(v.valor) : '—') + '</td>' +
+          '<td class="num"><button class="mini" data-acao="editar-venda" data-id="' + v.id + '">Editar</button> ' +
+            '<button class="mini del" data-acao="excluir-venda" data-id="' + v.id + '">Excluir</button></td>' +
+        '</tr>';
+      }).join('') + '</tbody></table></div></div>';
+  }
+
+  /* ---------- desenho geral ---------- */
+  function desenhar() {
+    const mes = hoje().slice(0, 7);
+    const vendasMes = estado.vendas.filter(v => (v.data || '').slice(0, 7) === mes);
+    const totalMes = vendasMes.reduce((s, v) => s + (Number(v.valor) || 0), 0);
+    const abertos = estado.leads.filter(l => !l.etapas.entregue).length;
+
+    const lLeads = leadsVisiveis();
+    const lVendas = vendasVisiveis();
+
+    let corpo;
+    if (aba === 'leads') {
+      corpo = formLead() +
+        '<div class="bar">' +
+          '<input type="search" id="busca" placeholder="Buscar por nome, perfume ou telefone" value="' + esc(busca) + '">' +
+          '<label class="toggle"><input type="checkbox" id="pendentes"' + (soPendentes ? ' checked' : '') + '> Só pendentes</label>' +
+        '</div>' +
+        (lLeads.length
+          ? lLeads.map(cartaoLead).join('')
+          : '<div class="vazio">' + (estado.leads.length ? 'Nenhum lead corresponde à busca.' : 'Cadastre o primeiro lead no formulário acima. Cada quadradinho da trilha marca uma etapa do contato.') + '</div>');
+    } else {
+      corpo = formVenda() +
+        '<div class="bar"><input type="search" id="busca" placeholder="Buscar por cliente, perfume ou família" value="' + esc(busca) + '"></div>' +
+        (lVendas.length
+          ? tabelaVendas(lVendas)
+          : '<div class="vazio">' + (estado.vendas.length ? 'Nenhuma venda corresponde à busca.' : 'Registre a primeira venda no formulário acima.') + '</div>');
+    }
+
+    document.getElementById('app').innerHTML =
+      '<div class="wrap">' +
+        '<header class="head">' +
+          '<div class="brand"><p class="eyebrow">Controle de vendas</p><h1>Perfumaria</h1></div>' +
+          '<div class="stats">' +
+            '<div class="stat"><span class="n">' + abertos + '</span><span class="l">Leads abertos</span></div>' +
+            '<div class="stat"><span class="n">' + vendasMes.length + '</span><span class="l">Vendas no mês</span></div>' +
+            '<div class="stat"><span class="n">' + moeda(totalMes) + '</span><span class="l">Total no mês</span></div>' +
+          '</div>' +
+        '</header>' +
+        '<div class="tabs" role="tablist">' +
+          '<button class="tab" role="tab" aria-selected="' + (aba === 'leads') + '" data-acao="aba" data-aba="leads">Leads (' + estado.leads.length + ')</button>' +
+          '<button class="tab" role="tab" aria-selected="' + (aba === 'vendas') + '" data-acao="aba" data-aba="vendas">Clientes e vendas (' + estado.vendas.length + ')</button>' +
+        '</div>' +
+        (avisoTexto ? '<div class="aviso">' + esc(avisoTexto) + '</div>' : '') +
+        corpo +
+        '<div class="rodape">' +
+          '<span>Os dados ficam salvos neste aplicativo e continuam aqui quando você voltar.</span>' +
+          '<span><button class="mini" data-acao="csv">Exportar CSV</button> <button class="mini del" data-acao="zerar">Apagar tudo</button></span>' +
+        '</div>' +
+      '</div>';
+  }
+
+  /* ---------- ações ---------- */
+  function val(idc) {
+    const el = document.getElementById(idc);
+    return el ? el.value.trim() : '';
+  }
+
+  function acao(nome, alvo) {
+    const alvoId = alvo.getAttribute('data-id');
+
+    if (nome === 'aba') {
+      aba = alvo.getAttribute('data-aba');
+      busca = ''; editando = null; desenhar(); return;
+    }
+
+    if (nome === 'add-lead') {
+      const n = val('l-nome');
+      if (!n) { avisoTexto = 'Informe ao menos o nome do lead.'; desenhar(); return; }
+      avisoTexto = '';
+      estado.leads.push({
+        id: id(), nome: n, telefone: val('l-tel'), perfume: val('l-perfume'),
+        familia: val('l-familia'), data: val('l-data') || hoje(), obs: val('l-obs'),
+        etapas: { msg1: false, msg2: false, encomenda: false, pago: false, entregue: false, recompra: false },
+        convertido: false
+      });
+      desenhar(); salvar(); return;
+    }
+
+    if (nome === 'salvar-lead') {
+      const l = estado.leads.find(x => x.id === editando.id);
+      if (l) {
+        l.nome = val('l-nome') || l.nome;
+        l.telefone = val('l-tel'); l.perfume = val('l-perfume');
+        l.familia = val('l-familia'); l.data = val('l-data'); l.obs = val('l-obs');
+      }
+      editando = null; desenhar(); salvar(); return;
+    }
+
+    if (nome === 'add-venda') {
+      const n = val('v-nome');
+      if (!n) { avisoTexto = 'Informe ao menos o nome do cliente.'; desenhar(); return; }
+      avisoTexto = '';
+      estado.vendas.push({
+        id: id(), nome: n, perfume: val('v-perfume'), familia: val('v-familia'),
+        data: val('v-data') || hoje(), valor: val('v-valor'), obs: val('v-obs')
+      });
+      desenhar(); salvar(); return;
+    }
+
+    if (nome === 'salvar-venda') {
+      const v = estado.vendas.find(x => x.id === editando.id);
+      if (v) {
+        v.nome = val('v-nome') || v.nome;
+        v.perfume = val('v-perfume'); v.familia = val('v-familia');
+        v.data = val('v-data'); v.valor = val('v-valor'); v.obs = val('v-obs');
+      }
+      editando = null; desenhar(); salvar(); return;
+    }
+
+    if (nome === 'etapa') {
+      const l = estado.leads.find(x => x.id === alvoId);
+      if (l) l.etapas[alvo.getAttribute('data-etapa')] = !l.etapas[alvo.getAttribute('data-etapa')];
+      desenhar(); salvar(); return;
+    }
+
+    if (nome === 'converter') {
+      const l = estado.leads.find(x => x.id === alvoId);
+      if (l) {
+        estado.vendas.push({
+          id: id(), nome: l.nome, perfume: l.perfume, familia: l.familia,
+          data: hoje(), valor: '', obs: l.obs || ''
+        });
+        l.convertido = true;
+      }
+      desenhar(); salvar(); return;
+    }
+
+    if (nome === 'editar-lead') { editando = { tipo: 'lead', id: alvoId }; desenhar(); window.scrollTo({ top: 0 }); return; }
+    if (nome === 'editar-venda') { editando = { tipo: 'venda', id: alvoId }; desenhar(); window.scrollTo({ top: 0 }); return; }
+    if (nome === 'cancelar') { editando = null; desenhar(); return; }
+
+    if (nome === 'excluir-lead') {
+      const l = estado.leads.find(x => x.id === alvoId);
+      if (l && confirm('Excluir o lead de ' + l.nome + '?')) {
+        estado.leads = estado.leads.filter(x => x.id !== alvoId);
+        if (editando && editando.id === alvoId) editando = null;
+        desenhar(); salvar();
+      }
+      return;
+    }
+
+    if (nome === 'excluir-venda') {
+      const v = estado.vendas.find(x => x.id === alvoId);
+      if (v && confirm('Excluir a venda de ' + v.nome + '?')) {
+        estado.vendas = estado.vendas.filter(x => x.id !== alvoId);
+        if (editando && editando.id === alvoId) editando = null;
+        desenhar(); salvar();
+      }
+      return;
+    }
+
+    if (nome === 'csv') { exportar(); return; }
+
+    if (nome === 'zerar') {
+      if (confirm('Isso apaga todos os leads e vendas salvos. Continuar?')) {
+        estado = { leads: [], vendas: [] };
+        editando = null; desenhar(); salvar();
+      }
+      return;
+    }
+  }
+
+  function exportar() {
+    const linha = (a) => a.map(c => '"' + String(c == null ? '' : c).replace(/"/g, '""') + '"').join(';');
+    let txt = 'LEADS\n' + linha(['Nome', 'Telefone', 'Perfume', 'Família', 'Data do interesse'].concat(ETAPAS.map(e => e.longo)).concat(['Observação'])) + '\n';
+    estado.leads.forEach(l => {
+      txt += linha([l.nome, l.telefone, l.perfume, fam(l.familia).nome, dataBr(l.data)]
+        .concat(ETAPAS.map(e => l.etapas[e.id] ? 'sim' : 'não')).concat([l.obs])) + '\n';
+    });
+    txt += '\nVENDAS\n' + linha(['Cliente', 'Perfume', 'Família', 'Data da compra', 'Valor', 'Observação']) + '\n';
+    estado.vendas.forEach(v => {
+      txt += linha([v.nome, v.perfume, fam(v.familia).nome, dataBr(v.data), v.valor, v.obs]) + '\n';
+    });
+
+    const blob = new Blob(['\ufeff' + txt], { type: 'text/csv;charset=utf-8;' });
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = 'crm-perfumes.csv';
+    a.click();
+    setTimeout(() => URL.revokeObjectURL(a.href), 1000);
+  }
+
+  /* ---------- eventos ---------- */
+  document.getElementById('app').addEventListener('click', function (ev) {
+    const alvo = ev.target.closest('[data-acao]');
+    if (alvo) acao(alvo.getAttribute('data-acao'), alvo);
+  });
+
+  document.getElementById('app').addEventListener('input', function (ev) {
+    if (ev.target.id === 'busca') {
+      busca = ev.target.value;
+      const pos = ev.target.selectionStart;
+      desenhar();
+      const novo = document.getElementById('busca');
+      if (novo) { novo.focus(); novo.setSelectionRange(pos, pos); }
+    }
+  });
+
+  document.getElementById('app').addEventListener('change', function (ev) {
+    if (ev.target.id === 'pendentes') { soPendentes = ev.target.checked; desenhar(); }
+  });
+
+  document.getElementById('app').addEventListener('keydown', function (ev) {
+    if (ev.key !== 'Enter') return;
+    if (ev.target.tagName !== 'INPUT' || ev.target.type === 'search') return;
+    const botao = document.querySelector('.panel .btn');
+    if (botao) botao.click();
+  });
+
+  carregar();
+  desenhar();
+})();
+</script>
+</body>
+</html>
