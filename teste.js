@@ -70,5 +70,23 @@ const dom6 = new JSDOM(html, {
 ok('avisa quando os dados estão ilegíveis', !!dom6.window.document.querySelector('.aviso'));
 ok('não apaga dados ilegíveis', dom6.window.localStorage.getItem('crm-perfumes:dados') === '{quebrado');
 
+// Sessão 3: busca (continua na primeira página, que já tem a Márcia cadastrada)
+doc.getElementById('l-nome').value = 'Ana Telefone';
+doc.getElementById('l-tel').value = '61 97777-6666';
+clicar(doc, '[data-acao="add-lead"]');
+
+const buscar = (termo) => {
+  const campo = doc.getElementById('busca');
+  campo.value = termo;
+  campo.dispatchEvent(new dom.window.Event('input', { bubbles: true }));
+  return [...doc.querySelectorAll('.nome')].map(n => n.textContent);
+};
+
+ok('busca acha nome digitado sem acento', buscar('marcia').includes("Márcia D'Ávila"));
+ok('busca acha telefone digitado sem pontuação', buscar('977776666').includes('Ana Telefone'));
+ok('busca acha telefone como está escrito', buscar('97777-6666').includes('Ana Telefone'));
+ok('busca por termo inexistente não traz ninguém', buscar('zzzz').length === 0);
+buscar('');
+
 console.log(falhas === 0 ? '\nTodos os testes passaram.' : '\n' + falhas + ' teste(s) falharam.');
 process.exit(falhas ? 1 : 0);

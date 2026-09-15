@@ -431,22 +431,32 @@
   }
 
   /* ---------- listas filtradas ---------- */
+  // Tira os acentos e deixa tudo minúsculo, para "marcia" achar "Márcia".
+  function semAcento(t) {
+    return String(t == null ? '' : t).normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase();
+  }
+
+  // Procura o termo nos campos de texto. Se o termo for um número, procura
+  // também só nos dígitos do telefone, para "977776666" achar "61 97777-6666".
+  function achou(campos, telefone) {
+    const termo = semAcento(busca.trim());
+    if (!termo) return true;
+    if (semAcento(campos.join(' ')).includes(termo)) return true;
+    const digitos = soDigitos(busca);
+    return digitos.length >= 3 && soDigitos(telefone).includes(digitos);
+  }
+
   function leadsVisiveis() {
-    const t = busca.trim().toLowerCase();
     return estado.leads.filter(l => {
       if (soPendentes && l.etapas.entregue) return false;
-      if (!t) return true;
-      return [l.nome, l.perfume, l.telefone, fam(l.familia).nome, l.obs]
-        .join(' ').toLowerCase().includes(t);
+      return achou([l.nome, l.perfume, l.telefone, fam(l.familia).nome, l.obs], l.telefone);
     }).sort((a, b) => (b.data || '').localeCompare(a.data || ''));
   }
 
   function vendasVisiveis() {
-    const t = busca.trim().toLowerCase();
-    return estado.vendas.filter(v => {
-      if (!t) return true;
-      return [v.nome, v.perfume, fam(v.familia).nome].join(' ').toLowerCase().includes(t);
-    }).sort((a, b) => (b.data || '').localeCompare(a.data || ''));
+    return estado.vendas
+      .filter(v => achou([v.nome, v.perfume, fam(v.familia).nome], ''))
+      .sort((a, b) => (b.data || '').localeCompare(a.data || ''));
   }
 
   /* ---------- blocos de HTML ---------- */
