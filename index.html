@@ -573,7 +573,7 @@
         const f = fam(v.familia);
         return '<tr>' +
           '<td>' + esc(v.nome) + (v.obs ? '<br><span class="meta">' + esc(v.obs) + '</span>' : '') + '</td>' +
-          '<td>' + esc(v.perfume) + '</td>' +
+          '<td>' + (v.perfume ? esc(v.perfume) : '—') + '</td>' +
           '<td><span class="chip" style="--fam:' + f.cor + ';background:' + f.cor + '">' + f.nome + '</span></td>' +
           '<td>' + dataBr(v.data) + '</td>' +
           '<td class="num">' + (v.valor ? moeda(v.valor) : '—') + '</td>' +

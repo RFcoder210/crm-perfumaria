@@ -108,5 +108,10 @@ doc.getElementById('l-nome').value = 'Teste Limpeza';
 clicar(doc, '[data-acao="add-lead"]');
 ok('limpa o formulário depois de adicionar', doc.getElementById('l-nome').value === '');
 
+// Sessão 5: tabela de vendas
+clicar(doc, '[data-acao="aba"][data-aba="vendas"]');
+ok('mostra traço quando a venda não tem perfume',
+  doc.querySelector('tbody tr td:nth-child(2)').textContent === '—');
+
 console.log(falhas === 0 ? '\nTodos os testes passaram.' : '\n' + falhas + ' teste(s) falharam.');
 process.exit(falhas ? 1 : 0);
