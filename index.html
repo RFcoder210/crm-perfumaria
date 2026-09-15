@@ -250,7 +250,19 @@
     border: 1px solid var(--fam);
     background: transparent;
     padding: 0;
+    position: relative;
     transition: background .18s ease;
+  }
+  /* A barrinha continua com 8px de altura, mas a área que responde ao toque
+     passa a ter cerca de 44px, o tamanho recomendado para o dedo.
+     O rótulo embaixo (MSG 1, PAGO…) também passa a funcionar como alvo. */
+  .dot::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: -18px;
+    bottom: -18px;
   }
   .dot[aria-pressed="true"] { background: var(--fam); }
   .dot.next { border-style: dashed; }
@@ -260,6 +272,7 @@
     text-transform: uppercase;
     color: var(--muted);
     text-align: center;
+    pointer-events: none; /* o toque no rótulo vale como toque no marcador */
   }
   .step.on span { color: var(--ink); }
   .converter { margin-top: 12px; }
