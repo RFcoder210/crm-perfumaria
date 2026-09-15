@@ -8,6 +8,7 @@ const ok = (nome, cond) => { console.log((cond ? '  ok   ' : '  FALHA') + ' | ' 
 // Sessão 1: cadastro
 let dom = new JSDOM(html, { runScripts: 'dangerously', url: 'https://exemplo.local/' });
 let doc = dom.window.document;
+dom.window.scrollTo = () => {}; // o jsdom não tem rolagem de tela; evita ruído no console
 const clicar = (d, sel) => d.querySelector(sel).dispatchEvent(new d.defaultView.Event('click', { bubbles: true }));
 
 ok('a página desenha o cabeçalho', !!doc.querySelector('h1'));
@@ -87,6 +88,25 @@ ok('busca acha telefone digitado sem pontuação', buscar('977776666').includes(
 ok('busca acha telefone como está escrito', buscar('97777-6666').includes('Ana Telefone'));
 ok('busca por termo inexistente não traz ninguém', buscar('zzzz').length === 0);
 buscar('');
+
+// Sessão 4: o que está digitado não se perde quando a tela é redesenhada
+clicar(doc, '[data-acao="editar-lead"]');
+doc.getElementById('l-obs').value = 'rascunho ainda não salvo';
+doc.querySelectorAll('.dot')[0].dispatchEvent(new dom.window.Event('click', { bubbles: true }));
+ok('mantém o texto digitado ao marcar etapa durante a edição',
+  doc.getElementById('l-obs').value === 'rascunho ainda não salvo');
+
+buscar('ana');
+ok('mantém o texto digitado ao usar a busca durante a edição',
+  doc.getElementById('l-obs').value === 'rascunho ainda não salvo');
+buscar('');
+
+clicar(doc, '[data-acao="cancelar"]');
+ok('formulário volta limpo depois de cancelar', doc.getElementById('l-obs').value === '');
+
+doc.getElementById('l-nome').value = 'Teste Limpeza';
+clicar(doc, '[data-acao="add-lead"]');
+ok('limpa o formulário depois de adicionar', doc.getElementById('l-nome').value === '');
 
 console.log(falhas === 0 ? '\nTodos os testes passaram.' : '\n' + falhas + ' teste(s) falharam.');
 process.exit(falhas ? 1 : 0);

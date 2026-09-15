@@ -383,6 +383,8 @@
   let editando = null; // {tipo, id}
   let avisoTexto = '';
   let bloqueado = false; // impede gravar por cima de dados que não puderam ser lidos
+  let formNaTela = '';   // qual formulário está na tela neste momento
+  let limparForm = false; // ligado pelas ações que terminam o preenchimento
 
   /* ---------- utilidades ---------- */
   const esc = (s) => String(s == null ? '' : s)
@@ -581,8 +583,42 @@
       }).join('') + '</tbody></table></div></div>';
   }
 
+  /* ---------- rascunho do formulário ---------- */
+  // Cada clique redesenha a tela inteira. Sem o que está abaixo, o que foi
+  // digitado e ainda não foi salvo se perderia ao marcar uma etapa, excluir
+  // um lead ou digitar na busca. Guardamos os valores antes de redesenhar e
+  // devolvemos depois, desde que continue sendo o mesmo formulário.
+  const CAMPOS = {
+    leads: ['l-nome', 'l-tel', 'l-data', 'l-perfume', 'l-familia', 'l-obs'],
+    vendas: ['v-nome', 'v-perfume', 'v-familia', 'v-data', 'v-valor', 'v-obs']
+  };
+
+  function qualFormulario() {
+    return aba + ':' + (editando ? editando.tipo + ':' + editando.id : 'novo');
+  }
+
+  function lerRascunho() {
+    const r = {};
+    CAMPOS[aba].forEach(idc => {
+      const el = document.getElementById(idc);
+      if (el) r[idc] = el.value;
+    });
+    return r;
+  }
+
+  function devolverRascunho(r) {
+    Object.keys(r).forEach(idc => {
+      const el = document.getElementById(idc);
+      if (el) el.value = r[idc];
+    });
+  }
+
   /* ---------- desenho geral ---------- */
   function desenhar() {
+    const formAtual = qualFormulario();
+    const rascunho = (!limparForm && formAtual === formNaTela) ? lerRascunho() : null;
+    limparForm = false;
+
     const mes = hoje().slice(0, 7);
     const vendasMes = estado.vendas.filter(v => (v.data || '').slice(0, 7) === mes);
     const totalMes = vendasMes.reduce((s, v) => s + (Number(v.valor) || 0), 0);
@@ -630,6 +666,9 @@
           '<span><button class="mini" data-acao="csv">Exportar CSV</button> <button class="mini del" data-acao="zerar">Apagar tudo</button></span>' +
         '</div>' +
       '</div>';
+
+    if (rascunho) devolverRascunho(rascunho);
+    formNaTela = formAtual;
   }
 
   /* ---------- ações ---------- */
@@ -656,7 +695,7 @@
         etapas: { msg1: false, msg2: false, encomenda: false, pago: false, entregue: false, recompra: false },
         convertido: false
       });
-      desenhar(); salvar(); return;
+      limparForm = true; desenhar(); salvar(); return;
     }
 
     if (nome === 'salvar-lead') {
@@ -677,7 +716,7 @@
         id: id(), nome: n, perfume: val('v-perfume'), familia: val('v-familia'),
         data: val('v-data') || hoje(), valor: val('v-valor'), obs: val('v-obs')
       });
-      desenhar(); salvar(); return;
+      limparForm = true; desenhar(); salvar(); return;
     }
 
     if (nome === 'salvar-venda') {
