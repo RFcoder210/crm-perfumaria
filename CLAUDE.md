@@ -11,7 +11,7 @@ Sistema de controle de vendas de perfumes, com duas frentes:
 - **Leads** — pessoas que demonstraram interesse e ainda não compraram, acompanhadas por um funil de seis etapas.
 - **Clientes e vendas** — histórico do que cada pessoa comprou, quando e por quanto.
 
-**Usuário final:** um vendedor autônomo de perfumes, que não é da área de tecnologia. Vai usar principalmente pelo celular, entre atendimentos. Ele não é o desenvolvedor do projeto.
+**Usuário final:** um perfumista autônomo, que não é da área de tecnologia. Ele fabrica as próprias fragrâncias, tanto contratipos quanto autorais, e vende apenas frascos fechados. Não é revendedor de marcas de terceiros. Vai usar principalmente pelo celular, entre atendimentos. Ele não é o desenvolvedor do projeto.
 
 **Desenvolvedor:** eu. Estudante de Inteligência Artificial, iniciante em programação, estudando Python em paralelo. Este projeto é para um amigo e serve também como portfólio e prática.
 
@@ -28,18 +28,29 @@ Sistema de controle de vendas de perfumes, com duas frentes:
 - Faça uma alteração por vez, com commit pequeno e mensagem descritiva em português.
 - Se eu pedir algo que vai criar problema mais adiante, diga isso antes de fazer.
 - Quando um conceito importante aparecer, avise: "isso vale para o Caderno de Conceitos" — mantenho um material de estudo separado.
+- O projeto avança aos poucos, em blocos curtos, porque estudo em paralelo.
 
 ---
 
 ## 3. Estado atual do código
 
-- `index.html` — aplicação inteira em um único arquivo: HTML, CSS e JavaScript puro (sem framework, sem etapa de build).
-- Interface em português, pensada para celular.
-- O código foi gerado em uma conversa no Claude.ai e ainda não passou por nenhum teste.
+- `index.html` — aplicação inteira em um único arquivo: HTML, CSS e JavaScript puro (sem framework, sem etapa de build). Interface em português, pensada para celular. Gerado em uma conversa no Claude.ai.
+- `TESTES.md` — roteiro de testes manuais.
+- `teste.js` — teste automatizado com jsdom, que cobre parte do roteiro. Roda com `npm test`.
+- `package.json` — declara o jsdom como dependência de desenvolvimento.
 
-### Pendência crítica antes de qualquer outra coisa
+### Armazenamento dos dados
 
-O arquivo usa `window.storage` para salvar os dados. **Essa API só existe dentro dos artefatos do Claude.ai e não funciona em um navegador comum.** A primeira tarefa do projeto é substituí-la por `localStorage`, mantendo o mesmo formato de dados e o mesmo tratamento de erro. Sem isso, o sistema abre mas não salva nada.
+A troca de `window.storage` por `localStorage` já foi feita. Os dados ficam na chave `crm-perfumes:dados`, no formato da seção 4. O código trata três situações de erro:
+
+- navegador bloqueando o armazenamento: avisa que nada será salvo;
+- dados salvos ilegíveis: avisa e não grava por cima, para permitir recuperação;
+- falha ao gravar: avisa e recomenda exportar o CSV.
+
+### Pendências
+
+- **Confirmar em navegador real, no celular**, rodando o roteiro do `TESTES.md` pela primeira vez: os dados precisam sobreviver ao recarregar a página e ao fechar e reabrir o navegador. O `teste.js` simula o recarregamento, mas não substitui o teste no aparelho.
+- O `teste.js` cria três páginas que nunca usa (`dom2`, `dom3`, `dom4`). Não afetam o resultado; ficam para uma limpeza futura.
 
 ---
 
@@ -100,29 +111,62 @@ Tudo é gravado em uma única chave, contendo um objeto com duas listas.
 
 ## 6. Decisões já tomadas — não reabrir sem eu pedir
 
+As decisões estão em três grupos. As técnicas dependem só de mim. As outras dependem do usuário final e ficam marcadas como CONFIRMADO ou SUPOSIÇÃO. Conforme ele responder, movo cada item de SUPOSIÇÃO para CONFIRMADO, ou reabro a decisão.
+
+### 6.1 Decisões técnicas — dependem só de mim
+
 - Arquivo único, JavaScript puro, sem framework e sem etapa de build. O motivo é a minha capacidade de manutenção, não elegância técnica.
-- Dados no navegador do usuário final, sem servidor e sem conta de login.
 - Publicação no GitHub Pages, gratuita.
-- Backup pelo botão de exportar CSV, com rotina semanal recomendada ao usuário.
+- Testes automatizados com jsdom desde já, sem esperar a entrega (ver seção 8).
 - Nada de otimização de desempenho antes de medir. Com algumas centenas de registros o sistema não fica lento. O ponto conhecido é que cada clique redesenha a tela inteira; só vale reescrever isso se um teste com 1.000 registros acusar lentidão perceptível.
+
+### 6.2 CONFIRMADO pelo usuário final
+
+- Nenhum item até agora.
+
+### 6.3 SUPOSIÇÃO minha — ainda não confirmado com o usuário final
+
+- Dados no navegador do usuário final, sem servidor e sem conta de login. Só se sustenta se ele for a única pessoa a usar o sistema (ver 7.3, pergunta 1).
+- Backup pelo botão de exportar CSV, com rotina semanal recomendada. Pressupõe que ele vai exportar com regularidade.
+- Interface pensada para celular, porque ele usaria principalmente pelo celular, entre atendimentos.
 
 ---
 
-## 7. Riscos assumidos
+## 7. Riscos e requisitos em aberto
 
-- **Perda de dados:** se o usuário limpar o navegador ou trocar de celular, perde tudo. Mitigação atual é o CSV. Migrar para um banco de dados online é assunto de uma fase futura, não de agora.
-- **Requisitos incompletos:** o sistema foi desenhado sem entrevistar o usuário final. Campos como preço de custo, tamanho do frasco ou decant, forma de pagamento e prazo de recompra ainda não foram confirmados com ele.
+**A entrevista com o usuário final estava marcada e não aconteceu.** Nenhum requisito foi confirmado com ele até agora. O sistema continua desenhado a partir de suposições minhas.
+
+### 7.1 Riscos assumidos
+
+- **Perda de dados:** se o usuário limpar o navegador ou trocar de celular, perde tudo. A mitigação atual é o CSV. Migrar para um banco de dados online é assunto de uma fase futura, a menos que a resposta à pergunta 1 de 7.3 antecipe isso.
+- **Limpeza automática do Safari (iPhone):** o Safari pode apagar os dados de um site depois de alguns dias de uso do navegador sem que o site seja aberto (a regra conhecida é de sete dias). Isso afeta diretamente um sistema que guarda tudo no navegador. Verificar a regra atual e como se proteger antes da entrega (seção 8, item 4).
+- **Requisitos não confirmados:** enquanto a entrevista não acontecer, qualquer campo ou regra de negócio pode mudar.
+
+### 7.2 CONFIRMADO pelo usuário final
+
+- Nenhum item até agora.
+
+### 7.3 SUPOSIÇÃO minha — perguntas para o usuário final
+
+1. **Mais alguém além dele vai usar o sistema?** É a pergunta de maior impacto técnico, porque decide se os dados podem continuar no navegador. Hoje os dados ficam presos ao navegador de um único aparelho. Se outra pessoa precisar ver ou lançar vendas, a decisão de 6.3 sobre dados no navegador cai. Suposição atual: só ele usa, em um único aparelho.
+2. **Cadastro de produtos.** O campo `perfume` hoje é texto livre. Como ele fabrica as próprias fragrâncias, provavelmente precisa virar um cadastro fixo de produtos. Registrado como risco; não implementar agora. Suposição atual: texto livre basta.
+3. **Produz sob encomenda ou em lote?** Ainda não sabemos. Suposição atual: o sistema não trata produção nem estoque.
+4. **Forma de pagamento: vende parcelado?** Ainda não sabemos. Hoje cada venda tem um único valor e a etapa "Pagou" é sim ou não; parcelamento não cabe nesse formato. Suposição atual: pagamento à vista.
+5. **Outros campos a confirmar:** preço de custo, tamanho do frasco e prazo de recompra. Decant não se aplica: ele vende apenas frascos fechados.
+6. **Ele já tem um site: integrar ou não?** Ainda não sabemos em que plataforma o site foi feito, quem o administra, nem se ele vende por ele (se for loja online, a plataforma pode já registrar clientes e pedidos, duplicando parte deste sistema). **O endereço definitivo precisa ser decidido antes da entrega:** os dados do navegador ficam presos ao endereço em que o sistema é aberto, e hoje não existe importação de CSV; trocar de endereço depois faz o sistema abrir vazio. Opções levantadas: manter o GitHub Pages; apontar um subdomínio do site dele para o GitHub Pages; ou colocar numa pasta do site, o que não é recomendado, porque os códigos do site teriam acesso aos dados dos clientes. Suposição atual: sem integração com o site.
 
 ---
 
 ## 8. Ordem de trabalho
 
-1. Trocar `window.storage` por `localStorage` e confirmar que os dados sobrevivem ao recarregar a página.
-2. Criar `TESTES.md` com o roteiro de testes manuais.
-3. Iniciar o repositório Git e publicar no GitHub Pages.
+1. Trocar `window.storage` por `localStorage`. **Feito no código; falta confirmar em navegador real, no celular** (ver seção 3).
+2. Criar `TESTES.md` com o roteiro de testes manuais. **Feito.**
+3. Iniciar o repositório Git e publicar no GitHub Pages. **Git iniciado; publicação pendente.**
 4. Entregar ao usuário final e coletar retorno de uma semana de uso real.
-5. Só então: testes automatizados com Playwright, seguindo o roteiro de `TESTES.md`.
+5. Testes com Playwright, num navegador de verdade, seguindo o roteiro de `TESTES.md`, para o que o jsdom não cobre: layout e tela de celular.
 6. Ajustes de campos conforme o retorno do uso real.
+
+**Decisão registrada em 15/09/2026 — testes automatizados com jsdom desde já.** O plano original deixava todo teste automatizado para depois da entrega. Na prática, o `teste.js` com jsdom já existe, e a decisão é mantê-lo e usá-lo desde já, junto com o roteiro manual. O jsdom não vê layout, não simula celular e não abre o CSV, então não substitui o `TESTES.md` nem o Playwright.
 
 Ideias fora dessa ordem (lembrete de recompra, cálculo de lucro, gráficos, controle de estoque) ficam registradas, não implementadas.
 
