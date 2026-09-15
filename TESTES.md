@@ -7,7 +7,9 @@ Execute esta lista a cada alteração, antes de publicar. Marque o que passou.
 - [ ] Cadastrar lead informando apenas o nome.
 - [ ] Cadastrar com nome contendo acento e apóstrofo (ex.: Márcia D'Ávila).
 - [ ] Tentar cadastrar sem nome: deve aparecer aviso, e nada deve ser gravado.
+- [ ] Depois de adicionar, conferir se o formulário ficou limpo.
 - [ ] Cadastrar venda informando apenas o nome do cliente.
+- [ ] Conferir se essa venda sem perfume mostra um traço na tabela.
 
 ## Funil
 
@@ -27,12 +29,16 @@ Execute esta lista a cada alteração, antes de publicar. Marque o que passou.
 
 - [ ] Editar um lead e salvar.
 - [ ] Editar um lead e cancelar no meio: nada deve mudar.
+- [ ] Editar um lead, digitar uma observação e, sem salvar, marcar uma etapa do
+      funil: o texto digitado deve continuar no formulário.
 - [ ] Excluir um lead enquanto outro está em edição.
 - [ ] Confirmar que a exclusão pede confirmação antes de apagar.
 
 ## Busca
 
 - [ ] Buscar por nome, por perfume e por telefone.
+- [ ] Buscar um nome sem acento (ex.: "marcia") e conferir se acha "Márcia".
+- [ ] Buscar o telefone sem pontuação (ex.: "977776666") e conferir se acha.
 - [ ] Buscar termo inexistente e conferir a mensagem de lista vazia.
 - [ ] Ativar "Só pendentes" e conferir se os entregues somem da lista.
 
@@ -45,6 +51,8 @@ Execute esta lista a cada alteração, antes de publicar. Marque o que passou.
 ## Celular
 
 - [ ] Abrir em tela de celular e conferir se os marcadores do funil são clicáveis.
+- [ ] Tocar no rótulo embaixo do marcador (MSG 1, PAGO…) e conferir se ele
+      também marca a etapa.
 - [ ] Conferir se os formulários cabem na tela sem rolagem lateral.
 - [ ] Tocar no telefone de um lead e conferir se abre o WhatsApp.
 
