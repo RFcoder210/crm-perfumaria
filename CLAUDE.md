@@ -196,3 +196,24 @@ Uma alteração só está concluída quando:
 - Clicar em "Lançar em vendas" e verificar que o botão desaparece.
 - Exportar o CSV e abrir no Excel ou Google Sheets, conferindo acentuação.
 - Abrir em tela de celular e confirmar que os marcadores do funil são clicáveis.
+
+---
+
+## Sistema de agentes
+
+Este projeto usa um **sistema de agentes** organizado pela pasta `.plano/`.
+
+- O ciclo de trabalho é conduzido pelo comando `/orquestrar`; o encerramento do dia, por `/encerrar-dia`.
+- Memória durável do projeto: `.plano/` (OBJETIVO, PLANO, ESTADO, CRONOGRAMA, PENDENCIAS, RETOMADA, tarefas/). A conversa é descartável; o que importa é gravado nesses arquivos.
+- Status válidos de tarefa: PENDENTE, EM_ANDAMENTO, CONCLUIDA, BLOQUEADA.
+- `.plano/estado/` é gerado por scripts (medidor de uso). Não editar manualmente.
+
+### Ambiente
+- Windows. A ferramenta Bash usa Git Bash; comandos PowerShell também são aceitos.
+- Este projeto é HTML, CSS e JavaScript puros: não há ambiente virtual Python. O Node.js é usado apenas para o `npm test` (jsdom). Se um agente precisar de Python para alguma tarefa, usar o ambiente virtual do projeto (`.venv/Scripts/python`), criado com `py -m venv .venv`.
+- Nunca apagar arquivos do usuário fora de `.plano/historico/`.
+
+### Comunicação
+- Português do Brasil, linguagem formal e objetiva.
+- Em caso de conflito com a seção 2 deste arquivo (explicar conceitos novos com analogia, porque o desenvolvedor é iniciante), vale a seção 2.
+- Relatórios de subagentes: curtos e no formato definido em cada agente.
