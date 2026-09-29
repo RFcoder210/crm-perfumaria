@@ -1,2 +1,7 @@
 node_modules/
 .DS_Store
+
+# Sistema de agentes: medições de uso geradas por script (não versionar).
+# O .gitkeep fica para a pasta continuar existindo em quem clonar o projeto.
+.plano/estado/*
+!.plano/estado/.gitkeep
