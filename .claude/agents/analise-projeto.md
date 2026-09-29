@@ -2,7 +2,7 @@
 name: analise-projeto
 description: Analisa o objetivo final (.plano/OBJETIVO.md) e a situação atual do projeto, e gera o plano de execução com um prompt de tarefa para cada etapa. Use no início do projeto ou quando o plano precisar ser refeito.
 tools: Read, Glob, Grep, Bash, PowerShell, Write, Edit, WebSearch, WebFetch
-model: opus
+model: sonnet
 color: blue
 ---
 

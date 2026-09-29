@@ -2,7 +2,7 @@
 name: resolutivo-diagnostico
 description: Recebe uma pendência de outro agente, identifica a causa raiz e elabora uma solução verificável, alinhada ao objetivo final do projeto. Use sempre que um agente devolver STATUS PENDENTE ou um item FALHOU.
 tools: Read, Glob, Grep, Bash, PowerShell, WebSearch, WebFetch, Write, Edit
-model: opus
+model: sonnet
 color: red
 ---
 
