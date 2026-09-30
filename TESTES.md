@@ -48,6 +48,35 @@ Execute esta lista a cada alteração, antes de publicar. Marque o que passou.
 - [ ] Conferir se a acentuação saiu correta no arquivo.
 - [ ] Conferir se leads e vendas aparecem nas duas seções do arquivo.
 
+## Como abrir no celular (teste antes de publicar)
+
+Um servidor local é como abrir uma janelinha na sua casa para o celular
+espiar: o computador "serve" o `index.html` pela rede Wi-Fi, e só quem está
+no mesmo Wi-Fi enxerga.
+
+1. Deixe o computador e o celular no mesmo Wi-Fi.
+2. No computador, abra o terminal na pasta do projeto e rode:
+   `py -m http.server 8000 --bind 0.0.0.0`
+   (o terminal fica "ocupado"; é normal, o servidor está rodando).
+3. Em outro terminal, descubra o endereço do computador com `ipconfig` e
+   procure a linha "Endereço IPv4" do adaptador Wi-Fi (algo como
+   `192.168.0.79`).
+4. No celular, abra o navegador e digite `http://IPV4:8000/index.html`,
+   trocando IPV4 pelo número encontrado (exemplo:
+   `http://192.168.0.79:8000/index.html`).
+5. Se não abrir, o Firewall do Windows pode estar bloqueando. Quando o
+   Windows perguntar, permita o Python em redes privadas. Depois tente de
+   novo.
+6. Ao terminar, volte ao terminal do servidor e pare com Ctrl+C.
+
+Os dados salvos nesse endereço ficam separados dos dados do endereço
+publicado depois: cada endereço tem seu próprio "armário" de dados no
+navegador.
+
+**Aviso:** este teste usa `http`, não `https`. O `localStorage` funciona
+assim, mas se algum recurso exigir `https`, isso será conferido depois da
+publicação (tarefa T21).
+
 ## Celular
 
 - [ ] Abrir em tela de celular e conferir se os marcadores do funil são clicáveis.
