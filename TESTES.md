@@ -44,7 +44,7 @@ Execute esta lista a cada alteração, antes de publicar. Marque o que passou.
 
 ## Exportação
 
-- [ ] Exportar o CSV e abrir no Excel ou Google Sheets.
+- [x] Exportar o CSV e abrir no Excel ou Google Sheets.
 - [x] Conferir se a acentuação saiu correta no arquivo.
 - [x] Conferir se leads e vendas aparecem nas duas seções do arquivo.
 
@@ -101,3 +101,4 @@ Ele não substitui o roteiro manual: não vê o layout, não testa o celular e n
 | Data | Aparelho | Navegador | Endereço testado | OK | FALHOU | Observações |
 |---|---|---|---|---|---|---|
 | 2026-09-30 | iPhone | Safari | local (http://192.168.0.79:8000/index.html) | 30 de 31 | 0 | Dados sobreviveram a recarregar e a fechar o navegador por completo. Telefone abriu o WhatsApp (número fictício). Lacuna: o CSV foi aberto no VS Code, não no Excel nem no Google Sheets; o item "Exportar o CSV e abrir no Excel ou Google Sheets" segue desmarcado. Acentuação e as duas seções (LEADS e VENDAS) foram conferidas no arquivo. Não testado: adicionar à Tela de Início do iPhone. |
+| 2026-09-30 | PC (Windows) | Excel | arquivo `crm-perfumes.csv` exportado do iPhone | 1 (abrir o CSV no Excel) | 0 | Acentuação correta, colunas separadas e as duas seções (LEADS e VENDAS) corretas. A coluna de data mostra `########` enquanto estiver estreita: é só largura da coluna, não erro; basta alargá-la. |
