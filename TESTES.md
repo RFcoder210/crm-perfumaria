@@ -91,9 +91,9 @@ Para conferir no iPhone (o teste automático simula as datas, mas não substitui
 o aparelho). O aviso aparece no topo da tela quando há pelo menos um lead ou
 venda e a última exportação tem 7 dias ou mais, ou já é outro mês.
 
-- [ ] Com dados cadastrados e nenhuma exportação recente, conferir que o aviso
+- [x] Com dados cadastrados e nenhuma exportação recente, conferir que o aviso
       NÃO aparece no mesmo dia em que começou a usar.
-- [ ] Simular o aviso: no computador, abrir o console do navegador e rodar
+- [x] Simular o aviso: no computador, abrir o console do navegador e rodar
       `localStorage.setItem('crm-perfumes:backup', JSON.stringify({ultimo:'2026-01-01', primeiro:'2026-01-01'}))`,
       recarregar e conferir que aparece o aviso em português, com o botão
       "Exportar agora". (No iPhone, esperar os 7 dias reais também vale.)
@@ -120,3 +120,4 @@ Ele não substitui o roteiro manual: não vê o layout, não testa o celular e n
 | 2026-09-30 | PC (Windows) | Excel | arquivo `crm-perfumes.csv` exportado do iPhone | 1 (abrir o CSV no Excel) | 0 | Acentuação correta, colunas separadas e as duas seções (LEADS e VENDAS) corretas. A coluna de data mostra `########` enquanto estiver estreita: é só largura da coluna, não erro; basta alargá-la. |
 | 2026-09-30 | iPhone | Ícone da Tela de Início (web app) | local (http://192.168.0.79:8000/index.html) | - | - | O sistema abriu **vazio** pelo ícone: os leads cadastrados no Safari não aparecem. Conclusão: o ícone e o Safari têm "armários" de dados separados. Não há como levar os dados de um para o outro (não existe importação de CSV). Falta conferir se um lead cadastrado pelo ícone sobrevive a fechar e reabrir. |
 | 2026-09-30 | iPhone | Ícone da Tela de Início (web app) | local (http://192.168.0.79:8000/index.html) | 1 (permanência pelo ícone) | 0 | Um lead cadastrado pelo ícone sobreviveu a fechar o app e abrir de novo. O ícone guarda os dados de verdade; só não compartilha o armário com o Safari. |
+| 2026-09-30 | iPhone | Ícone da Tela de Início (web app) | publicado (https://rfcoder210.github.io/crm-perfumaria/) | tudo normal | 0 | Teste da T21 sem falhas. O aviso de backup NÃO apareceu, como esperado: o endereço é novo (armário vazio), o primeiro uso foi hoje e o aviso só vem após 7 dias. A conferência real no iPhone fica para a semana de uso (por volta de 07/10). Simulação feita no mesmo dia, na página publicada, em navegador de computador: o aviso apareceu com data antiga. |

@@ -30,4 +30,7 @@ O endereço publicado tem "armário" de dados próprio e usa https. É o ambient
 - Não presumir OK para item não informado. Não commitar sem confirmação.
 
 ## Resultado
-(preenchido pelo executor)
+Concluída em 2026-09-30, relato do desenvolvedor: no iPhone, endereço publicado (https://rfcoder210.github.io/crm-perfumaria/), adicionado à Tela de Início, "tudo normal".
+- Único ponto: o aviso de backup não apareceu. Esperado: endereço novo, primeiro uso hoje, aviso só após 7 dias. Conferência real no iPhone por volta de 07/10, durante a semana de uso (T25).
+- Item pendente no TESTES.md: "Tocar em Exportar agora: o CSV é baixado e o aviso some na hora" (só dá para testar quando o aviso aparecer).
+- Lembrete para o guia T22: o ícone deve ser criado antes de cadastrar; este endereço tem armazenamento separado do endereço de teste antigo.

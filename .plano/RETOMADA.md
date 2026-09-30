@@ -8,7 +8,7 @@ Motivo do checkpoint: fim do dia
 
 ## Próxima ação (a primeira coisa a fazer)
 1. Usuário confirma no navegador que viu os arquivos no GitHub (fecha o que resta da T18); T19 concluída (Pages no ar: https://rfcoder210.github.io/crm-perfumaria/). README já traz o endereço, commitado localmente; enviar ao GitHub só com nova confirmação explícita.
-2. T21 (usuário): no iPhone, abrir o endereço publicado, adicionar à Tela de Início e repetir o teste de permanência (armário novo e vazio). Conferir também o aviso de backup.
+2. T21 concluída (iPhone, endereço publicado, tudo normal). Falta conferir o aviso de backup no iPhone por volta de 07/10, durante a semana de uso; próxima tarefa de agente liberada: T22 (guia de uso).
 3. Só após T19 iniciarem T22 (guia de uso)
 4. Remover ícone de teste do iPhone (aponta para http://192.168.0.79:8000, servidor já encerrado)
 
