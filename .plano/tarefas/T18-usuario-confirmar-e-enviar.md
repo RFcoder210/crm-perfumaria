@@ -31,4 +31,8 @@ Regra do projeto: nada é publicado na internet sem confirmação explícita do 
 - Arquivos "Copia" não versionados ficam de fora; não os adicione.
 
 ## Resultado
-(preenchido pelo executor)
+Concluída em 2026-09-30, após a confirmação escrita do desenvolvedor.
+- Antes do envio: árvore limpa, `npm test` passando, 66 arquivos versionados, todos os commits com o e-mail noreply do GitHub, nenhuma ocorrência de e-mail pessoal ou do nome do perfumista nos arquivos nem no histórico.
+- Remoto: https://github.com/RFcoder210/crm-perfumaria.git; `git push -u origin main` sem `--force`; login feito pelo desenvolvedor no navegador.
+- Verificação: `git ls-remote origin main` e `git rev-parse HEAD` retornam o mesmo hash (03731b5 no momento do envio). A API pública confirma repositório público e o e-mail noreply no último commit.
+- Falta: o desenvolvedor abrir https://github.com/RFcoder210/crm-perfumaria no navegador e ver os arquivos.

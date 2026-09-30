@@ -4,18 +4,17 @@ Motivo do checkpoint: fim do dia
 ## Onde paramos
 - Última tarefa concluída: T23 — roteiro de retorno de uma semana preparado
 - Tarefa em andamento: nenhuma
-- Árvore limpa: tudo de .plano/ (inclusive OBJETIVO.md e PENDENCIAS.md) já está commitado e versionado (commit de 2026-09-30). Só .plano/estado/ fica fora, por decisão.
+- Código e planejamento enviados ao GitHub (T18 concluída em 2026-09-30): origin = https://github.com/RFcoder210/crm-perfumaria. Árvore limpa. Só .plano/estado/ fica fora do Git, por decisão.
 
 ## Próxima ação (a primeira coisa a fazer)
-1. Usuário confirma envio ao GitHub com frase exata "CONFIRMO enviar ao GitHub" (T18)
-2. Se SIM: executar T19 (ativar GitHub Pages) e T21 (retestar no endereço publicado)
+1. Usuário abre https://github.com/RFcoder210/crm-perfumaria no navegador e confere os arquivos (fecha a T18); depois ativa o GitHub Pages (T19): Settings > Pages > Deploy from a branch > main / (root)
+2. Executar T19 (verificar o Pages no ar) e T21 (retestar no endereço publicado, inclusive o ícone da Tela de Início)
 3. Só após T19 iniciarem T22 (guia de uso)
 4. Remover ícone de teste do iPhone (aponta para http://192.168.0.79:8000, servidor já encerrado)
 
 ## Pendências abertas
 - T12: entrevista com o perfumista ("GB"); roteiro em .plano/tarefas/T11-roteiro-entrevista.md
 - T13: registrar respostas da entrevista; arquivo: docs/respostas-entrevista.md (revisar antes de enviar)
-- T18: envio ao GitHub (aguarda confirmação do usuário com frase exata)
 - T21: retestar no celular no endereço publicado (após T19)
 - T22: escrever guia de uso (aguarda T19, depois rever antes de enviar)
 - Backup do histórico .git antigo em ../crm-perfumaria-backup-git-2026-09-30 (contém Gmail; nunca enviar)
@@ -35,7 +34,6 @@ Motivo do checkpoint: fim do dia
 
 ## Aguardando o usuário
 - T12: agendar entrevista com o perfumista
-- T18: confirmar envio ao GitHub com frase exata "CONFIRMO enviar ao GitHub"
 - Depois de T19: retestar e remover ícone de teste do iPhone
 
 ## Ler se necessário
