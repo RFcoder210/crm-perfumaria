@@ -24,7 +24,8 @@ depois dessa entrega.
 - Entregas intermediárias: publicação no GitHub Pages; teste no celular; entrega ao usuário final (sem datas definidas).
 
 ## Disponibilidade (obrigatório)
-- Dias da semana em que vou trabalhar no projeto: não definidos (informado apenas o volume: 3 horas nos dias de trabalho)
+- Dias da semana em que vou trabalhar no projeto: segunda a sexta, com margem para dar uma olhada no projeto nos fins de semana (definido em 2026-09-29). 3 horas nos dias de trabalho.
+- Commits: os agentes podem commitar (mensagem descritiva em português). Envio ao GitHub (push) continua exigindo a frase explícita "CONFIRMO enviar ao GitHub" (tarefa T18), conforme a restrição de não publicar sem confirmação.
 - Horas por dia, em média: 3
 - Plano do Claude: Pro
 
