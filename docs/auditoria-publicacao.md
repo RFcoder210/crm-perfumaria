@@ -72,3 +72,10 @@ Passos (a fazer por você; nenhum foi executado):
 Motivo: os achados atuais são todos de gravidade baixa, exceto o e-mail (que tem solução simples e barata agora). O cenário 2 complica o Git para iniciante sem ganho de segurança real, e o cenário 3 joga fora o valor de portfólio. Reavaliar se, na entrevista, o amigo pedir sigilo sobre o negócio dele: nesse caso, o cenário 3 passa a ser o mais seguro.
 
 Antes do envio (T18) rodar de novo, como conferência final: `git ls-files`, a busca de padrões sensíveis e `git log --format="%an <%ae>" | sort -u`.
+
+## Resolução (2026-09-30)
+
+- Decisão do desenvolvedor: cenário 1 (repositório público com tudo) e reescrita da autoria mantendo o histórico.
+- Todos os commits passaram a usar o e-mail noreply do GitHub; o e-mail pessoal saiu dos metadados e deste documento, inclusive do histórico.
+- O `git config user.email` deste projeto também usa o noreply. A cópia do `.git` anterior à reescrita fica fora do projeto e não deve ser enviada.
+- Pendente: revisar `docs/respostas-entrevista.md` (T13) e `docs/retorno-semana.md` (T26) antes de qualquer envio, porque podem conter dados reais do perfumista.
