@@ -10,6 +10,7 @@ Documentos de apoio do projeto. O planejamento fica em `.plano/`; o código fica
 | `roteiro-entrevista.md` | Perguntas para a entrevista com o perfumista | T11 |
 | `auditoria-publicacao.md` | O que ficará público no repositório | T15 |
 | `roteiro-retorno.md` | Roteiro do retorno após uma semana de uso | T23 |
+| `guia-do-usuario.md` | Guia de uso para o perfumista (iPhone, ícone, backup) | T22 |
 | `prototipo-dashboard.html` | Protótipo de painel mensal com dados fictícios, só para analisar a estrutura (não faz parte do sistema) | ideia |
 
 ## Documentos previstos (criados pelos agentes ao longo do plano)
@@ -17,6 +18,5 @@ Documentos de apoio do projeto. O planejamento fica em `.plano/`; o código fica
 | Arquivo | Para que serve | Tarefa |
 |---|---|---|
 | `respostas-entrevista.md` | Respostas registradas da entrevista | T13 |
-| `guia-do-usuario.md` | Guia de uso para o perfumista | T22 |
 | `retorno-semana.md` | Retorno consolidado da semana de uso | T26 |
 | `proposta-claude-md-final.md` | Proposta de atualização final do CLAUDE.md | T28 |

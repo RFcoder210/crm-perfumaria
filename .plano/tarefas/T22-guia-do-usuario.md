@@ -35,4 +35,8 @@ O perfumista autônomo não é da área de tecnologia e usa o sistema principalm
 - Marcador de contato fica para o desenvolvedor preencher. Não commitar; proponha a mensagem.
 
 ## Resultado
-(preenchido pelo executor)
+Status: CONCLUIDA (2026-09-30). Criado `docs/guia-do-usuario.md` (113 linhas) com as seções (a) a (h), centrado no iPhone/Safari (ícone da Tela de Início antes de cadastrar; o que fazer se já cadastrou no Safari; nota curta para Android). Backup explica Arquivos/Downloads, envio por WhatsApp/e-mail/iCloud Drive, aviso de 7 dias/virada de mês, e diz com franqueza que não há importação. Inclui a dica do `########` no Excel. Contato ficou como marcador "CONTATO DO DESENVOLVEDOR".
+
+Verificação: `wc -l` = 113 (<= 120); `grep -ci "exportar csv"` = 2; endereço por extenso presente; todos os nomes de botões/etapas/rótulos citados foram conferidos em `index.html` (grep > 0 para cada um); sem termos técnicos (localStorage, JavaScript, cache).
+
+Mensagem de commit proposta: "Adiciona o guia de uso para o perfumista (T22)"
