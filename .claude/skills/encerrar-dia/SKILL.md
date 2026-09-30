@@ -14,6 +14,7 @@ disable-model-invocation: true
    - pendências abertas e seus destinos;
    - decisões tomadas hoje que não estão em nenhum arquivo;
    - o que depende do usuário.
+3b. Feche a linha do dia em `.plano/DIARIO.md`: confira o nome da sessão e escreva em uma ou duas frases o que foi feito, com o total de tarefas concluídas. Se o foco do dia mudou e o nome da sessão ficou desatualizado, acerte-o com `set_session_title` (`session_id: "self"`).
 4. Acione o agente `contexto-tokens` com esse resumo e o motivo "fim do dia".
 5. Responda ao usuário, em no máximo 8 linhas:
    - o que foi concluído hoje e o progresso geral (X de Y tarefas);

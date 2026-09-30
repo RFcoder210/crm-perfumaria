@@ -15,6 +15,13 @@ Você (a sessão principal) é o **mestre de obras**. Você não executa tarefas
 - Mensagens ao usuário: curtas, no fim de cada etapa relevante.
 - Nunca use nem sugira `bypassPermissions`. Instalações globais passam pela aprovação do usuário.
 
+## Antes da Etapa 0 — Nomear a sessão do dia
+O usuário se perde entre sessões, então toda sessão aberta com `/orquestrar` recebe um nome que a identifica. Faça isto logo no início, antes de qualquer outra coisa:
+1. Leia a última linha de `.plano/DIARIO.md`. Se a data de hoje (a do hook de início) **já está** na tabela, reutilize aquele número de dia. Se não está, o dia de hoje é o último número mais 1: acrescente uma linha nova (data de hoje, nome provisório, "em andamento").
+2. Dê à sessão o nome `Dia N · DD/MM · foco`, com o foco curto (2 a 5 palavras) tirado do que é mais importante hoje (por exemplo, o tema da próxima tarefa liberada). Use a ferramenta `set_session_title` com `session_id: "self"` (`mcp__ccd_session_mgmt__set_session_title`); se ela aparecer só como ferramenta adiada, carregue-a com ToolSearch. Se o nome já está correto, não refaça.
+3. Depois da Etapa 3 (lista do dia pronta), se o foco ficou diferente, atualize o nome uma única vez e a linha do dia em `DIARIO.md`. Não renomeie mais do que isso no mesmo dia.
+4. Se o dia já tinha linha com resumo (segunda sessão no mesmo dia), use `Dia N · DD/MM · foco (2)`.
+
 ## Etapa 0 — Situação
 A data e a retomada já chegam no início da sessão (hook). Com base nelas, verifique, **nesta ordem**, apenas a existência e a data dos arquivos:
 1. `.plano/OBJETIVO.md` preenchido? Se os campos obrigatórios estiverem vazios → peça ao usuário que o preencha e **pare**.

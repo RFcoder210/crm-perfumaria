@@ -205,6 +205,7 @@ Este projeto usa um **sistema de agentes** organizado pela pasta `.plano/`.
 
 - O ciclo de trabalho é conduzido pelo comando `/orquestrar`; o encerramento do dia, por `/encerrar-dia`.
 - Memória durável do projeto: `.plano/` (OBJETIVO, PLANO, ESTADO, CRONOGRAMA, PENDENCIAS, RETOMADA, tarefas/). A conversa é descartável; o que importa é gravado nesses arquivos.
+- Nome das sessões: toda sessão iniciada com `/orquestrar` é nomeada `Dia N · DD/MM · foco`, e o registro dos dias fica em `.plano/DIARIO.md`. Regra pedida pelo desenvolvedor para não se perder entre as sessões.
 - Status válidos de tarefa: PENDENTE, EM_ANDAMENTO, CONCLUIDA, BLOQUEADA.
 - `.plano/estado/` é gerado por scripts (medidor de uso). Não editar manualmente.
 
