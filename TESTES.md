@@ -4,49 +4,49 @@ Execute esta lista a cada alteração, antes de publicar. Marque o que passou.
 
 ## Cadastro
 
-- [ ] Cadastrar lead informando apenas o nome.
-- [ ] Cadastrar com nome contendo acento e apóstrofo (ex.: Márcia D'Ávila).
-- [ ] Tentar cadastrar sem nome: deve aparecer aviso, e nada deve ser gravado.
-- [ ] Depois de adicionar, conferir se o formulário ficou limpo.
-- [ ] Cadastrar venda informando apenas o nome do cliente.
-- [ ] Conferir se essa venda sem perfume mostra um traço na tabela.
+- [x] Cadastrar lead informando apenas o nome.
+- [x] Cadastrar com nome contendo acento e apóstrofo (ex.: Márcia D'Ávila).
+- [x] Tentar cadastrar sem nome: deve aparecer aviso, e nada deve ser gravado.
+- [x] Depois de adicionar, conferir se o formulário ficou limpo.
+- [x] Cadastrar venda informando apenas o nome do cliente.
+- [x] Conferir se essa venda sem perfume mostra um traço na tabela.
 
 ## Funil
 
-- [ ] Marcar uma etapa do meio sem marcar as anteriores.
-- [ ] Desmarcar uma etapa já marcada.
-- [ ] Marcar "Entregue" e conferir se aparece o botão "Lançar em vendas".
-- [ ] Clicar em "Lançar em vendas" e conferir se o botão some e o selo aparece.
-- [ ] Conferir se o lead continua na lista depois de virar venda.
+- [x] Marcar uma etapa do meio sem marcar as anteriores.
+- [x] Desmarcar uma etapa já marcada.
+- [x] Marcar "Entregue" e conferir se aparece o botão "Lançar em vendas".
+- [x] Clicar em "Lançar em vendas" e conferir se o botão some e o selo aparece.
+- [x] Conferir se o lead continua na lista depois de virar venda.
 
 ## Permanência dos dados
 
-- [ ] Recarregar a página e conferir se todos os registros voltaram.
-- [ ] Fechar o navegador, abrir de novo e conferir novamente.
-- [ ] Conferir se as etapas marcadas continuam marcadas após recarregar.
+- [x] Recarregar a página e conferir se todos os registros voltaram.
+- [x] Fechar o navegador, abrir de novo e conferir novamente.
+- [x] Conferir se as etapas marcadas continuam marcadas após recarregar.
 
 ## Edição e exclusão
 
-- [ ] Editar um lead e salvar.
-- [ ] Editar um lead e cancelar no meio: nada deve mudar.
-- [ ] Editar um lead, digitar uma observação e, sem salvar, marcar uma etapa do
+- [x] Editar um lead e salvar.
+- [x] Editar um lead e cancelar no meio: nada deve mudar.
+- [x] Editar um lead, digitar uma observação e, sem salvar, marcar uma etapa do
       funil: o texto digitado deve continuar no formulário.
-- [ ] Excluir um lead enquanto outro está em edição.
-- [ ] Confirmar que a exclusão pede confirmação antes de apagar.
+- [x] Excluir um lead enquanto outro está em edição.
+- [x] Confirmar que a exclusão pede confirmação antes de apagar.
 
 ## Busca
 
-- [ ] Buscar por nome, por perfume e por telefone.
-- [ ] Buscar um nome sem acento (ex.: "marcia") e conferir se acha "Márcia".
-- [ ] Buscar o telefone sem pontuação (ex.: "977776666") e conferir se acha.
-- [ ] Buscar termo inexistente e conferir a mensagem de lista vazia.
-- [ ] Ativar "Só pendentes" e conferir se os entregues somem da lista.
+- [x] Buscar por nome, por perfume e por telefone.
+- [x] Buscar um nome sem acento (ex.: "marcia") e conferir se acha "Márcia".
+- [x] Buscar o telefone sem pontuação (ex.: "977776666") e conferir se acha.
+- [x] Buscar termo inexistente e conferir a mensagem de lista vazia.
+- [x] Ativar "Só pendentes" e conferir se os entregues somem da lista.
 
 ## Exportação
 
 - [ ] Exportar o CSV e abrir no Excel ou Google Sheets.
-- [ ] Conferir se a acentuação saiu correta no arquivo.
-- [ ] Conferir se leads e vendas aparecem nas duas seções do arquivo.
+- [x] Conferir se a acentuação saiu correta no arquivo.
+- [x] Conferir se leads e vendas aparecem nas duas seções do arquivo.
 
 ## Como abrir no celular (teste antes de publicar)
 
@@ -79,11 +79,11 @@ publicação (tarefa T21).
 
 ## Celular
 
-- [ ] Abrir em tela de celular e conferir se os marcadores do funil são clicáveis.
-- [ ] Tocar no rótulo embaixo do marcador (MSG 1, PAGO…) e conferir se ele
+- [x] Abrir em tela de celular e conferir se os marcadores do funil são clicáveis.
+- [x] Tocar no rótulo embaixo do marcador (MSG 1, PAGO…) e conferir se ele
       também marca a etapa.
-- [ ] Conferir se os formulários cabem na tela sem rolagem lateral.
-- [ ] Tocar no telefone de um lead e conferir se abre o WhatsApp.
+- [x] Conferir se os formulários cabem na tela sem rolagem lateral.
+- [x] Tocar no telefone de um lead e conferir se abre o WhatsApp.
 
 ## Testes automatizados
 
@@ -95,3 +95,9 @@ npm test
 ```
 
 Ele não substitui o roteiro manual: não vê o layout, não testa o celular e não abre o CSV.
+
+## Registro de execuções
+
+| Data | Aparelho | Navegador | Endereço testado | OK | FALHOU | Observações |
+|---|---|---|---|---|---|---|
+| 2026-09-30 | iPhone | Safari | local (http://192.168.0.79:8000/index.html) | 30 de 31 | 0 | Dados sobreviveram a recarregar e a fechar o navegador por completo. Telefone abriu o WhatsApp (número fictício). Lacuna: o CSV foi aberto no VS Code, não no Excel nem no Google Sheets; o item "Exportar o CSV e abrir no Excel ou Google Sheets" segue desmarcado. Acentuação e as duas seções (LEADS e VENDAS) foram conferidas no arquivo. Não testado: adicionar à Tela de Início do iPhone. |
