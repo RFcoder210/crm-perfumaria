@@ -58,7 +58,7 @@ Legenda: (U) = AGUARDA USUÁRIO (o passo depende do desenvolvedor ou de terceiro
 | T19 | (U) AGUARDA USUÁRIO: ativar o GitHub Pages e verificar | CONCLUIDA | T18 |
 | T20 | (U) AGUARDA USUÁRIO: subdomínio do amigo (condicional, só opção B) | CONCLUIDA | T19 |
 | T21 | (U) AGUARDA USUÁRIO: retestar no celular no endereço publicado | CONCLUIDA | T19 (T20) |
-| T22 | Escrever o guia de uso para o perfumista | PENDENTE | T19, T10 |
+| T22 | Escrever o guia de uso para o perfumista | EM_ANDAMENTO | T19, T10 |
 | T23 | Preparar o roteiro de retorno de uma semana | CONCLUIDA | T13 (ou T11) |
 | T24 | (U) AGUARDA USUÁRIO: entregar ao perfumista | PENDENTE | T21, T22, T23 |
 | T25 | (U) AGUARDA USUÁRIO: acompanhar a semana de uso (7 dias corridos) | PENDENTE | T24 |
