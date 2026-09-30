@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#4A2545">
+<title>Protótipo de painel mensal (dados fictícios)</title>
+<style>
+  :root {
+    --ink: #17161C;
+    --muted: #6B6975;
+    --line: #E3E2EA;
+    --surface: #F4F4F8;
+    --card: #FFFFFF;
+    --plum: #4A2545;
+    --gold: #A8842F;
+    --danger: #A6342E;
+    --ok: #2F6B4F;
+    --radius: 10px;
+    --fam-floral: #C45C8E;
+    --fam-citrico: #C79318;
+    --fam-amadeirado: #8A5A3B;
+    --fam-ambar: #B5581F;
+    --fam-fougere: #4E8C63;
+    --fam-chipre: #6E7B4A;
+    --fam-aquatico: #3B7CA5;
+    --fam-gourmand: #9B5A83;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--surface);
+    color: var(--ink);
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    line-height: 1.4;
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+  .aviso-proto {
+    background: #FFF4D6;
+    color: #6B4E00;
+    font-size: 12px;
+    text-align: center;
+    padding: 6px 12px;
+    border-bottom: 1px solid #EAD38A;
+  }
+  header {
+    background: var(--plum);
+    color: #fff;
+    padding: 14px 16px 12px;
+  }
+  header h1 {
+    margin: 0;
+    font-family: Georgia, "Times New Roman", serif;
+    font-weight: 400;
+    font-size: 20px;
+  }
+  .meses { display: flex; gap: 8px; margin-top: 10px; }
+  .meses button {
+    border: 1px solid rgba(255,255,255,.45);
+    background: transparent;
+    color: #fff;
+    border-radius: 999px;
+    padding: 6px 14px;
+    font-size: 14px;
+    font-family: inherit;
+    cursor: pointer;
+  }
+  .meses button[aria-pressed="true"] { background: #fff; color: var(--plum); font-weight: 600; }
+  main { max-width: 520px; margin: 0 auto; padding: 14px 16px 28px; }
+  section { margin-bottom: 18px; }
+  h2 {
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: .06em;
+    color: var(--muted);
+    margin: 0 0 8px;
+    font-weight: 600;
+  }
+  .card {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 12px;
+  }
+  .kpis { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .kpi .rotulo { font-size: 12px; color: var(--muted); }
+  .kpi .valor {
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 26px;
+    color: var(--plum);
+    margin: 2px 0;
+  }
+  .kpi .var { font-size: 12px; }
+  .sobe { color: var(--ok); }
+  .desce { color: var(--danger); }
+  .igual { color: var(--muted); }
+  .kpi.dinheiro { border-style: dashed; }
+  .kpi.dinheiro .rotulo::after { content: " *"; color: var(--gold); }
+
+  /* barras horizontais (funil, perfumes) */
+  .linha {
+    display: block;
+    width: 100%;
+    text-align: left;
+    background: none;
+    border: 0;
+    padding: 6px 0;
+    font: inherit;
+    color: inherit;
+    cursor: pointer;
+    border-radius: 6px;
+  }
+  .linha:active { background: var(--surface); }
+  .linha .topo { display: flex; justify-content: space-between; font-size: 14px; margin-bottom: 3px; }
+  .linha .topo b { font-variant-numeric: tabular-nums; }
+  .linha .topo small { color: var(--muted); font-size: 12px; margin-left: 6px; }
+  .trilho { height: 12px; background: var(--surface); border-radius: 6px; overflow: hidden; }
+  .barra { height: 100%; border-radius: 6px; transition: width .35s ease; }
+
+  /* rosca */
+  .rosca-area { display: flex; align-items: center; gap: 14px; }
+  .rosca { width: 120px; height: 120px; flex: none; }
+  .rosca text { font-family: Georgia, serif; fill: var(--plum); }
+  .legenda { list-style: none; margin: 0; padding: 0; font-size: 13px; flex: 1; }
+  .legenda li { display: flex; align-items: center; gap: 6px; padding: 2px 0; }
+  .legenda i { width: 10px; height: 10px; border-radius: 3px; flex: none; }
+  .legenda span { margin-left: auto; color: var(--muted); font-variant-numeric: tabular-nums; }
+
+  /* colunas por semana */
+  .colunas { display: flex; align-items: flex-end; gap: 10px; height: 110px; padding-top: 6px; }
+  .coluna { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: flex-end; height: 100%; }
+  .coluna .num { font-size: 12px; margin-bottom: 3px; font-variant-numeric: tabular-nums; }
+  .coluna .pilar { width: 100%; background: var(--plum); border-radius: 6px 6px 0 0; transition: height .35s ease; min-height: 3px; }
+  .coluna .sem { font-size: 11px; color: var(--muted); margin-top: 4px; }
+
+  .nota { font-size: 12px; color: var(--muted); margin-top: 8px; }
+  .gaveta {
+    margin-top: 10px;
+    border-top: 1px dashed var(--line);
+    padding-top: 10px;
+    font-size: 14px;
+  }
+  .gaveta[hidden] { display: none; }
+  .gaveta h3 { margin: 0 0 6px; font-size: 14px; }
+  .gaveta ul { margin: 0; padding-left: 18px; }
+  .gaveta button {
+    float: right; border: 0; background: none; color: var(--plum);
+    font: inherit; font-size: 13px; cursor: pointer; padding: 0;
+  }
+  .rodape-nota {
+    font-size: 12px; color: var(--muted); border-top: 1px solid var(--line);
+    padding-top: 10px; margin-top: 4px;
+  }
+</style>
+</head>
+<body>
+
+<div class="aviso-proto">Protótipo com dados fictícios. Nada aqui vem do sistema real.</div>
+
+<header>
+  <h1>Painel do mês</h1>
+  <div class="meses" id="meses" role="group" aria-label="Escolher o mês">
+    <button type="button" data-mes="set" aria-pressed="true">Setembro</button>
+    <button type="button" data-mes="ago" aria-pressed="false">Agosto</button>
+  </div>
+</header>
+
+<main id="painel"></main>
+
+<script>
+/* Dados fictícios. No sistema real, tudo viria de leads e vendas gravados no navegador. */
+const FAMILIAS = {
+  floral:     { nome: 'Floral',     cor: 'var(--fam-floral)' },
+  citrico:    { nome: 'Cítrico',    cor: 'var(--fam-citrico)' },
+  amadeirado: { nome: 'Amadeirado', cor: 'var(--fam-amadeirado)' },
+  ambar:      { nome: 'Âmbar',      cor: 'var(--fam-ambar)' },
+  aquatico:   { nome: 'Aquático',   cor: 'var(--fam-aquatico)' },
+  gourmand:   { nome: 'Gourmand',   cor: 'var(--fam-gourmand)' }
+};
+const ETAPAS = ['Mandei mensagem', 'Mandei de novo', 'Encomendou', 'Pagou', 'Recebeu', 'Recomprou'];
+const NOMES = ["Márcia D'Ávila", 'Carlos Teste', 'Helena Prado', 'Bruno Nogueira', 'Patrícia Lemos',
+  'Rafael Duarte', 'Sônia Vasques', 'Tiago Amaral', 'Letícia Moraes', 'Edson Ribeiro',
+  'Camila Furtado', 'Otávio Lima', 'Vera Campos', 'Diego Barros', 'Fernanda Cruz',
+  'Anselmo Reis', 'Juliana Tavares', 'Marcos Pontes', 'Renata Siqueira', 'Gustavo Melo',
+  'Alice Fontes', 'Nelson Braga', 'Priscila Antunes', 'Wagner Lopes', 'Bianca Teles',
+  'Célia Monteiro', 'Hugo Carvalho'];
+
+const MESES = {
+  set: {
+    nome: 'Setembro', anterior: 'ago',
+    vendas: 18, valor: 4320, leadsNovos: 27, recompra: 4,
+    funil: [27, 19, 14, 13, 12, 4],
+    perfumes: [
+      { nome: 'Âmbar Noturno', fam: 'ambar', qtd: 6 },
+      { nome: 'Jardim Secreto', fam: 'floral', qtd: 4 },
+      { nome: 'Vento do Mar', fam: 'aquatico', qtd: 3 },
+      { nome: 'Madeira Nobre', fam: 'amadeirado', qtd: 3 },
+      { nome: 'Citrus Sol', fam: 'citrico', qtd: 2 }
+    ],
+    semanas: [3, 5, 6, 4]
+  },
+  ago: {
+    nome: 'Agosto', anterior: null,
+    vendas: 14, valor: 3150, leadsNovos: 22, recompra: 2,
+    funil: [22, 15, 11, 10, 9, 2],
+    perfumes: [
+      { nome: 'Âmbar Noturno', fam: 'ambar', qtd: 4 },
+      { nome: 'Jardim Secreto', fam: 'floral', qtd: 3 },
+      { nome: 'Madeira Nobre', fam: 'amadeirado', qtd: 3 },
+      { nome: 'Vento do Mar', fam: 'aquatico', qtd: 2 },
+      { nome: 'Doce Baunilha', fam: 'gourmand', qtd: 2 }
+    ],
+    semanas: [2, 4, 5, 3]
+  }
+};
+
+const brl = n => 'R$ ' + n.toLocaleString('pt-BR');
+
+function desenhar(chave) {
+  const m = MESES[chave];
+  const ant = m.anterior ? MESES[m.anterior] : null;
+  const ticket = Math.round(m.valor / m.vendas);
+  const ticketAnt = ant ? Math.round(ant.valor / ant.vendas) : null;
+  const varTxt = (a, b, fmt) => {
+    if (b == null) return '<span class="igual">sem mês anterior para comparar</span>';
+    const d = a - b;
+    if (d === 0) return '<span class="igual">igual a ' + ant.nome.toLowerCase() + '</span>';
+    const t = fmt ? fmt(Math.abs(d)) : Math.abs(d);
+    return d > 0
+      ? '<span class="sobe">▲ ' + t + ' a mais que em ' + ant.nome.toLowerCase() + '</span>'
+      : '<span class="desce">▼ ' + t + ' a menos que em ' + ant.nome.toLowerCase() + '</span>';
+  };
+
+  /* famílias: soma das quantidades dos perfumes de cada família */
+  const fam = {};
+  m.perfumes.forEach(p => { fam[p.fam] = (fam[p.fam] || 0) + p.qtd; });
+  const totalFam = Object.values(fam).reduce((a, b) => a + b, 0);
+  let acc = 0;
+  const fatias = Object.entries(fam).sort((a, b) => b[1] - a[1]).map(([id, q]) => {
+    const pct = q / totalFam * 100;
+    const s = '<circle cx="18" cy="18" r="15.9155" fill="none" stroke="' + FAMILIAS[id].cor +
+      '" stroke-width="6" stroke-dasharray="' + pct.toFixed(2) + ' ' + (100 - pct).toFixed(2) +
+      '" stroke-dashoffset="' + (25 - acc).toFixed(2) + '"/>';
+    acc += pct;
+    return { id, q, pct, svg: s };
+  });
+
+  const maxPerf = Math.max(...m.perfumes.map(p => p.qtd));
+  const maxSem = Math.max(...m.semanas);
+
+  const funilHtml = m.funil.map((n, i) => {
+    const conv = i === 0 ? '' : '<small>' + Math.round(n / m.funil[i - 1] * 100) + '% da etapa anterior</small>';
+    return '<button type="button" class="linha" data-etapa="' + i + '">' +
+      '<div class="topo"><span>' + ETAPAS[i] + conv + '</span><b>' + n + '</b></div>' +
+      '<div class="trilho"><div class="barra" style="width:' + (n / m.funil[0] * 100) + '%;background:var(--plum);opacity:' + (1 - i * 0.12) + '"></div></div>' +
+      '</button>';
+  }).join('');
+
+  const perfHtml = m.perfumes.map(p =>
+    '<div class="linha" style="cursor:default">' +
+    '<div class="topo"><span>' + p.nome + '<small>' + FAMILIAS[p.fam].nome + '</small></span><b>' + p.qtd + '</b></div>' +
+    '<div class="trilho"><div class="barra" style="width:' + (p.qtd / maxPerf * 100) + '%;background:' + FAMILIAS[p.fam].cor + '"></div></div>' +
+    '</div>').join('');
+
+  const semHtml = m.semanas.map((n, i) =>
+    '<div class="coluna"><span class="num">' + n + '</span>' +
+    '<div class="pilar" style="height:' + (n / maxSem * 78) + 'px"></div>' +
+    '<span class="sem">Sem ' + (i + 1) + '</span></div>').join('');
+
+  document.getElementById('painel').innerHTML =
+    '<section><h2>Resumo de ' + m.nome.toLowerCase() + '</h2><div class="kpis">' +
+      '<div class="card kpi"><div class="rotulo">Vendas feitas</div><div class="valor">' + m.vendas + '</div><div class="var">' + varTxt(m.vendas, ant && ant.vendas) + '</div></div>' +
+      '<div class="card kpi"><div class="rotulo">Leads novos</div><div class="valor">' + m.leadsNovos + '</div><div class="var">' + varTxt(m.leadsNovos, ant && ant.leadsNovos) + '</div></div>' +
+      '<div class="card kpi dinheiro"><div class="rotulo">Valor vendido</div><div class="valor">' + brl(m.valor) + '</div><div class="var">' + varTxt(m.valor, ant && ant.valor, brl) + '</div></div>' +
+      '<div class="card kpi dinheiro"><div class="rotulo">Ticket médio</div><div class="valor">' + brl(ticket) + '</div><div class="var">' + varTxt(ticket, ticketAnt, brl) + '</div></div>' +
+    '</div><p class="nota">* Cartões de dinheiro só ficam confiáveis quando o campo "valor" for sempre número. Hoje ele é texto livre.</p></section>' +
+
+    '<section><h2>Funil do mês</h2><div class="card">' + funilHtml +
+      '<div class="gaveta" id="gaveta" hidden></div>' +
+      '<p class="nota">Toque numa etapa para ver quem está nela (nomes fictícios).</p></div></section>' +
+
+    '<section><h2>Perfumes mais vendidos</h2><div class="card">' + perfHtml + '</div></section>' +
+
+    '<section><h2>Famílias olfativas</h2><div class="card"><div class="rosca-area">' +
+      '<svg class="rosca" viewBox="0 0 36 36" role="img" aria-label="Vendas por família olfativa">' +
+        '<circle cx="18" cy="18" r="15.9155" fill="none" stroke="#F4F4F8" stroke-width="6"/>' +
+        fatias.map(f => f.svg).join('') +
+        '<text x="18" y="18.6" text-anchor="middle" font-size="7">' + totalFam + '</text>' +
+        '<text x="18" y="23.4" text-anchor="middle" font-size="2.6" style="font-family:system-ui;fill:#6B6975">vendas</text>' +
+      '</svg>' +
+      '<ul class="legenda">' + fatias.map(f =>
+        '<li><i style="background:' + FAMILIAS[f.id].cor + '"></i>' + FAMILIAS[f.id].nome +
+        '<span>' + Math.round(f.pct) + '%</span></li>').join('') + '</ul>' +
+    '</div></div></section>' +
+
+    '<section><h2>Vendas por semana</h2><div class="card"><div class="colunas">' + semHtml + '</div></div></section>' +
+
+    '<section><h2>Clientes que voltaram</h2><div class="card kpi">' +
+      '<div class="valor">' + m.recompra + '</div>' +
+      '<div class="rotulo">clientes recompraram em ' + m.nome.toLowerCase() + '</div>' +
+      '<div class="var">' + varTxt(m.recompra, ant && ant.recompra) + '</div></div></section>' +
+
+    '<p class="rodape-nota">Este painel só lê os dados que já estão no sistema. Nada sai do aparelho. ' +
+    'O arquivo de fechamento do mês (CSV) continuaria sendo gerado pelo botão de exportar.</p>';
+
+  document.querySelectorAll('[data-etapa]').forEach(b => {
+    b.addEventListener('click', () => {
+      const i = Number(b.dataset.etapa);
+      const g = document.getElementById('gaveta');
+      const nomes = NOMES.slice(0, m.funil[i]);
+      g.hidden = false;
+      g.innerHTML = '<button type="button" id="fechar">Fechar</button><h3>' + ETAPAS[i] + ': ' + m.funil[i] + ' pessoas</h3>' +
+        '<ul>' + nomes.slice(0, 6).map(n => '<li>' + n + '</li>').join('') + '</ul>' +
+        (nomes.length > 6 ? '<p class="nota">e mais ' + (nomes.length - 6) + '...</p>' : '');
+      document.getElementById('fechar').onclick = () => { g.hidden = true; };
+    });
+  });
+}
+
+document.querySelectorAll('#meses button').forEach(b => {
+  b.addEventListener('click', () => {
+    document.querySelectorAll('#meses button').forEach(x => x.setAttribute('aria-pressed', x === b));
+    desenhar(b.dataset.mes);
+  });
+});
+desenhar('set');
+</script>
+</body>
+</html>

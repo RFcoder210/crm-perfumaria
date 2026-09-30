@@ -10,6 +10,7 @@ Documentos de apoio do projeto. O planejamento fica em `.plano/`; o código fica
 | `roteiro-entrevista.md` | Perguntas para a entrevista com o perfumista | T11 |
 | `auditoria-publicacao.md` | O que ficará público no repositório | T15 |
 | `roteiro-retorno.md` | Roteiro do retorno após uma semana de uso | T23 |
+| `prototipo-dashboard.html` | Protótipo de painel mensal com dados fictícios, só para analisar a estrutura (não faz parte do sistema) | ideia |
 
 ## Documentos previstos (criados pelos agentes ao longo do plano)
 
