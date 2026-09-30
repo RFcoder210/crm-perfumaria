@@ -62,7 +62,7 @@ Existe um teste automatizado em `teste.js`, que cobre parte desta lista. Para ro
 
 ```
 npm install
-node teste.js
+npm test
 ```
 
 Ele não substitui o roteiro manual: não vê o layout, não testa o celular e não abre o CSV.
