@@ -340,6 +340,28 @@
     font-size: 13px;
     margin-bottom: 14px;
   }
+  .aviso-backup {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    flex-wrap: wrap;
+    background: #FCF3E8;
+    border: 1px solid #E8D3B4;
+    color: #7A5218;
+    padding: 10px 12px;
+    border-radius: 8px;
+    font-size: 13px;
+    margin-bottom: 14px;
+  }
+  .aviso-backup .btn-backup {
+    background: #7A5218;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    padding: 8px 14px;
+    font-size: 13px;
+  }
 
   @media (max-width: 640px) {
     .grid { grid-template-columns: repeat(2, 1fr); }
@@ -355,6 +377,13 @@
 <script>
 (function () {
   const CHAVE = 'crm-perfumes:dados';
+
+  // Aviso de cópia de segurança (backup). Fica em chave separada para não
+  // mexer no formato dos dados. Para mudar a regra, altere só aqui.
+  const CHAVE_BACKUP = 'crm-perfumes:backup';
+  const DIAS_SEM_BACKUP = 7; // a partir de quantos dias sem exportar o aviso aparece
+  const MESES = ['janeiro', 'fevereiro', 'março', 'abril', 'maio', 'junho',
+    'julho', 'agosto', 'setembro', 'outubro', 'novembro', 'dezembro'];
 
   const FAMILIAS = [
     { id: 'floral',      nome: 'Floral',      cor: 'var(--fam-floral)' },
@@ -438,11 +467,76 @@
     if (bloqueado) return; // Não sobrescreve um arquivo que pode ser recuperável.
     try {
       localStorage.setItem(CHAVE, JSON.stringify(estado));
+      registrarPrimeiroUso();
       if (avisoTexto) { avisoTexto = ''; desenhar(); }
     } catch (e) {
       avisoTexto = 'Não foi possível gravar a última alteração. Ela aparece na tela, mas pode se perder ao fechar a página. Exporte o CSV agora para não perder nada.';
       desenhar();
     }
+  }
+
+  /* ---------- aviso de cópia de segurança ---------- */
+  // Guarda {ultimo: 'AAAA-MM-DD' ou '', primeiro: 'AAAA-MM-DD' ou ''}.
+  // Devolve null se o armazenamento estiver bloqueado ou o conteúdo ilegível;
+  // nesse caso o sistema simplesmente não avisa, sem mostrar erro.
+  const ehData = (t) => typeof t === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(t);
+
+  function lerBackup() {
+    try {
+      const bruto = localStorage.getItem(CHAVE_BACKUP);
+      if (bruto === null) return { ultimo: '', primeiro: '' };
+      const b = JSON.parse(bruto);
+      if (!b || typeof b !== 'object') return null;
+      return { ultimo: ehData(b.ultimo) ? b.ultimo : '', primeiro: ehData(b.primeiro) ? b.primeiro : '' };
+    } catch (e) {
+      return null;
+    }
+  }
+
+  function gravarBackup(b) {
+    try { localStorage.setItem(CHAVE_BACKUP, JSON.stringify(b)); } catch (e) { /* sem aviso, sem erro */ }
+  }
+
+  // Anota o dia do primeiro uso, para não avisar logo no primeiro cadastro.
+  function registrarPrimeiroUso() {
+    if (!estado.leads.length && !estado.vendas.length) return;
+    const b = lerBackup();
+    if (!b || b.primeiro || b.ultimo) return;
+    gravarBackup({ ultimo: '', primeiro: hoje() });
+  }
+
+  function registrarExportacao() {
+    const b = lerBackup() || { ultimo: '', primeiro: '' };
+    gravarBackup({ ultimo: hoje(), primeiro: b.primeiro || hoje() });
+  }
+
+  function diasEntre(de, ate) {
+    const t = (s) => Date.UTC(+s.slice(0, 4), +s.slice(5, 7) - 1, +s.slice(8, 10));
+    return Math.round((t(ate) - t(de)) / 86400000);
+  }
+
+  // Devolve o texto do aviso, ou '' quando não há nada a avisar.
+  function textoAvisoBackup() {
+    if (!estado.leads.length && !estado.vendas.length) return '';
+    const b = lerBackup();
+    if (!b) return '';
+    const dia = hoje();
+    const aviso = ' Toque em Exportar para guardar seus dados.';
+    if (b.ultimo) {
+      if (dia.slice(0, 7) !== b.ultimo.slice(0, 7)) {
+        const m = +dia.slice(5, 7) - 1;
+        const atual = MESES[m], anterior = MESES[(m + 11) % 12];
+        return atual.charAt(0).toUpperCase() + atual.slice(1) + ' começou. Quer guardar uma cópia dos dados de ' + anterior + '?';
+      }
+      const n = diasEntre(b.ultimo, dia);
+      if (n >= DIAS_SEM_BACKUP) return 'Faz ' + n + ' dias que você não salva uma cópia.' + aviso;
+      return '';
+    }
+    if (b.primeiro) {
+      const n = diasEntre(b.primeiro, dia);
+      if (n >= DIAS_SEM_BACKUP) return 'Você ainda não salvou nenhuma cópia dos seus dados, e já faz ' + n + ' dias que começou a usar.' + aviso;
+    }
+    return '';
   }
 
   /* ---------- listas filtradas ---------- */
@@ -645,8 +739,14 @@
           : '<div class="vazio">' + (estado.vendas.length ? 'Nenhuma venda corresponde à busca.' : 'Registre a primeira venda no formulário acima.') + '</div>');
     }
 
+    const textoBackup = textoAvisoBackup();
+
     document.getElementById('app').innerHTML =
       '<div class="wrap">' +
+        (textoBackup
+          ? '<div class="aviso-backup" role="status"><span>' + esc(textoBackup) + '</span>' +
+            '<button class="btn-backup" data-acao="csv">Exportar agora</button></div>'
+          : '') +
         '<header class="head">' +
           '<div class="brand"><p class="eyebrow">Controle de vendas</p><h1>Perfumaria</h1></div>' +
           '<div class="stats">' +
@@ -800,6 +900,9 @@
     a.download = 'crm-perfumes.csv';
     a.click();
     setTimeout(() => URL.revokeObjectURL(a.href), 1000);
+
+    registrarExportacao();
+    desenhar(); // o aviso de cópia some na hora
   }
 
   /* ---------- eventos ---------- */
@@ -830,6 +933,7 @@
   });
 
   carregar();
+  if (!bloqueado) registrarPrimeiroUso(); // quem já tinha dados antes desta versão também entra na contagem
   desenhar();
 })();
 </script>

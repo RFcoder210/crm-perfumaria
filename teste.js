@@ -128,5 +128,94 @@ ok('o cabeçalho de leads contém Observação', linhasCsv[iLeads + 1].includes(
 const dadosLeads = linhasCsv.slice(iLeads + 2, iVendas).filter(l => l.trim() !== '');
 ok('a seção LEADS tem 3 linhas de dados', dadosLeads.length === 3);
 
+// Sessão 7: aviso de cópia de segurança
+// Abre a página fingindo que hoje é "dia" (AAAA-MM-DD, ao meio-dia, hora local)
+// e com o armazenamento já preenchido.
+const paginaEm = (dia, dados, backup) => {
+  const agora = new Date(dia + 'T12:00:00').getTime();
+  return new JSDOM(html, {
+    runScripts: 'dangerously',
+    url: 'https://exemplo.local/',
+    beforeParse(w) {
+      const DateReal = w.Date;
+      w.Date = class extends DateReal {
+        constructor(...a) { if (a.length) super(...a); else super(agora); }
+        static now() { return agora; }
+      };
+      w.scrollTo = () => {};
+      if (dados !== undefined) w.localStorage.setItem('crm-perfumes:dados', JSON.stringify(dados));
+      if (backup !== undefined) w.localStorage.setItem('crm-perfumes:backup', typeof backup === 'string' ? backup : JSON.stringify(backup));
+    }
+  });
+};
+const umLead = { leads: [{ id: 'a1', nome: 'Ana', telefone: '', perfume: '', familia: '', data: '2026-09-01', obs: '',
+  etapas: { msg1: false, msg2: false, encomenda: false, pago: false, entregue: false, recompra: false }, convertido: false }], vendas: [] };
+const temAviso = (d) => !!d.window.document.querySelector('.aviso-backup');
+
+let p = paginaEm('2026-09-20', umLead, { ultimo: '2026-09-12', primeiro: '2026-09-01' });
+ok('avisa quando a última exportação tem 8 dias', temAviso(p));
+ok('o aviso diz quantos dias faz', p.window.document.querySelector('.aviso-backup').textContent.includes('Faz 8 dias'));
+
+p = paginaEm('2026-09-20', umLead, { ultimo: '2026-09-18', primeiro: '2026-09-01' });
+ok('não avisa com exportação recente no mesmo mês', !temAviso(p));
+
+p = paginaEm('2026-10-01', umLead, { ultimo: '2026-09-29', primeiro: '2026-09-01' });
+ok('avisa na virada do mês mesmo com exportação de 2 dias', temAviso(p));
+ok('o aviso da virada cita o mês anterior',
+  p.window.document.querySelector('.aviso-backup').textContent.includes('Outubro começou. Quer guardar uma cópia dos dados de setembro?'));
+
+p = paginaEm('2026-01-05', umLead, { ultimo: '2025-12-31', primeiro: '2025-12-01' });
+ok('na virada de ano o mês anterior é dezembro',
+  p.window.document.querySelector('.aviso-backup').textContent.includes('dados de dezembro'));
+
+p = paginaEm('2026-09-30', { leads: [], vendas: [] }, { ultimo: '2026-08-01', primeiro: '2026-08-01' });
+ok('não avisa com a lista vazia', !temAviso(p));
+
+p = paginaEm('2026-09-20', umLead, { ultimo: '2026-09-01', primeiro: '2026-09-01' });
+ok('o aviso aparece antes de exportar', temAviso(p));
+p.window.Blob = class {};
+p.window.URL.createObjectURL = () => 'blob:teste';
+p.window.URL.revokeObjectURL = () => {};
+p.window.HTMLAnchorElement.prototype.click = () => {};
+clicar(p.window.document, '.aviso-backup [data-acao="csv"]');
+ok('o aviso some ao exportar', !temAviso(p));
+ok('grava a data de hoje como última exportação',
+  JSON.parse(p.window.localStorage.getItem('crm-perfumes:backup')).ultimo === '2026-09-20');
+
+p = paginaEm('2026-09-20', umLead); // nunca exportou; sem chave de backup: o primeiro uso é hoje
+ok('nunca exportou e primeiro uso recente: sem aviso', !temAviso(p));
+ok('anota o dia do primeiro uso',
+  JSON.parse(p.window.localStorage.getItem('crm-perfumes:backup')).primeiro === '2026-09-20');
+
+p = paginaEm('2026-09-20', umLead, { ultimo: '', primeiro: '2026-09-10' });
+ok('nunca exportou e primeiro uso há 10 dias: avisa', temAviso(p));
+
+p = paginaEm('2026-09-20', undefined, undefined);
+p.window.document.getElementById('l-nome').value = 'Primeira';
+clicar(p.window.document, '[data-acao="add-lead"]');
+ok('o primeiro cadastro não dispara o aviso', !temAviso(p));
+ok('o primeiro cadastro grava o dia do primeiro uso',
+  JSON.parse(p.window.localStorage.getItem('crm-perfumes:backup')).primeiro === '2026-09-20');
+
+p = paginaEm('2026-09-20', umLead, '{quebrado');
+ok('chave de backup corrompida não quebra a página', p.window.document.querySelectorAll('.card').length === 1);
+ok('chave de backup corrompida: sem aviso e sem erro na tela', !temAviso(p) && !p.window.document.querySelector('.aviso'));
+ok('chave de backup corrompida não é sobrescrita ao cadastrar', (() => {
+  p.window.document.getElementById('l-nome').value = 'Outra';
+  clicar(p.window.document, '[data-acao="add-lead"]');
+  return p.window.localStorage.getItem('crm-perfumes:backup') === '{quebrado' && p.window.document.querySelectorAll('.card').length === 2;
+})());
+
+// armazenamento bloqueado: o sistema abre e não mostra aviso de cópia
+const bloq = new JSDOM(html, {
+  runScripts: 'dangerously',
+  url: 'https://exemplo.local/',
+  beforeParse(w) {
+    Object.defineProperty(w, 'localStorage', { get() { throw new Error('bloqueado'); } });
+  }
+});
+ok('armazenamento bloqueado: a página abre sem aviso de cópia',
+  !!bloq.window.document.querySelector('h1') && !bloq.window.document.querySelector('.aviso-backup'));
+
 console.log(falhas === 0 ? '\nTodos os testes passaram.' : '\n' + falhas + ' teste(s) falharam.');
 process.exit(falhas ? 1 : 0);

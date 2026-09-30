@@ -26,6 +26,7 @@ Legenda: **[PRIORIDADE: decide arquitetura e endereço]** marca as perguntas que
 | 9 | Volume | "Quantas pessoas novas te procuram por mês, e quantas vendas você fecha por mês, mais ou menos?" | Se o sistema simples dá conta ou se precisa de mais recursos (busca, filtros, organização por período). Hoje centenas de registros não pesam. | Dezenas de contatos por mês. |
 | 10 | WhatsApp | "Você conversa com os clientes pelo WhatsApp? É por ele que chama quem ainda não comprou?" | Se o número de telefone vira link direto para o WhatsApp (já existe hoje) e se vale incluir mensagens prontas no futuro. | Usa WhatsApp. |
 | 11 | Cópia semanal em planilha | "O sistema consegue baixar uma planilha com todos os seus contatos e vendas. Você toparia baixar essa planilha uma vez por semana, como uma cópia de segurança? Você abre planilha no celular (Excel, Google Planilhas)?" | Se a cópia de segurança pela planilha é realista ou se precisa de outra proteção (ex.: guardar os dados online). | Ele exporta a planilha toda semana. |
+| 12 | Relatório mensal de vendas | "No fim do mês, você gostaria de ver um resumo do que vendeu (quantas vendas, quanto entrou, quais perfumes saíram mais)? O que você gostaria de enxergar nesse resumo? Hoje, quando anota o valor de uma venda, você escreve só o número (150), com R$ (R$ 150), com vírgula (150,00) ou de outro jeito?" | Se entra um relatório ou fechamento do mês. Como o valor da venda é texto livre e opcional, somar só funciona se o jeito de anotar o valor for combinado antes (por exemplo, só números). | Não tem relatório; o topo da tela só mostra o total do mês. |
 
 ## Opções de endereço (pergunta 6)
 
@@ -95,6 +96,10 @@ Resposta:
 
 ### Pergunta 11 — Cópia semanal em planilha
 Resposta:
+
+
+### Pergunta 12 — Relatório mensal de vendas
+Resposta (quer ou não; o que quer ver; como anota o valor hoje):
 
 
 ### Outras observações dele

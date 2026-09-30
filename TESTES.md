@@ -85,6 +85,22 @@ publicação (tarefa T21).
 - [x] Conferir se os formulários cabem na tela sem rolagem lateral.
 - [x] Tocar no telefone de um lead e conferir se abre o WhatsApp.
 
+## Aviso de cópia de segurança
+
+Para conferir no iPhone (o teste automático simula as datas, mas não substitui
+o aparelho). O aviso aparece no topo da tela quando há pelo menos um lead ou
+venda e a última exportação tem 7 dias ou mais, ou já é outro mês.
+
+- [ ] Com dados cadastrados e nenhuma exportação recente, conferir que o aviso
+      NÃO aparece no mesmo dia em que começou a usar.
+- [ ] Simular o aviso: no computador, abrir o console do navegador e rodar
+      `localStorage.setItem('crm-perfumes:backup', JSON.stringify({ultimo:'2026-01-01', primeiro:'2026-01-01'}))`,
+      recarregar e conferir que aparece o aviso em português, com o botão
+      "Exportar agora". (No iPhone, esperar os 7 dias reais também vale.)
+- [ ] Tocar em "Exportar agora": o CSV é baixado e o aviso some na hora.
+- [ ] Recarregar a página e conferir que o aviso continua sem aparecer.
+- [ ] Conferir que, sem nenhum lead ou venda, o aviso nunca aparece.
+
 ## Testes automatizados
 
 Existe um teste automatizado em `teste.js`, que cobre parte desta lista. Para rodar:
