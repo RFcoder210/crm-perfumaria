@@ -4,7 +4,7 @@ Motivo do checkpoint: fim do dia
 ## Onde paramos
 - Última tarefa concluída: T23 — roteiro de retorno de uma semana preparado
 - Tarefa em andamento: nenhuma
-- Arquivos alterados e não commitados: .plano/OBJETIVO.md, .plano/PENDENCIAS.md (não versionados ainda)
+- Árvore limpa: tudo de .plano/ (inclusive OBJETIVO.md e PENDENCIAS.md) já está commitado e versionado (commit de 2026-09-30). Só .plano/estado/ fica fora, por decisão.
 
 ## Próxima ação (a primeira coisa a fazer)
 1. Usuário confirma envio ao GitHub com frase exata "CONFIRMO enviar ao GitHub" (T18)
