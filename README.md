@@ -17,7 +17,7 @@ Foi pensado para o celular, em português, e funciona sem servidor, sem cadastro
 
 ## Como usar
 
-Abra o sistema neste endereço: ENDERECO-A-PREENCHER-NA-T19
+Abra o sistema neste endereço: https://rfcoder210.github.io/crm-perfumaria/
 
 No celular, dá para adicionar a página à tela inicial para abrir como se fosse um aplicativo. Os dados ficam no aparelho e no navegador em que foram cadastrados; por isso, exporte o CSV com regularidade (uma vez por semana é uma boa rotina).
 

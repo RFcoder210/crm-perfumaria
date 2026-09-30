@@ -55,7 +55,7 @@ Legenda: (U) = AGUARDA USUÁRIO (o passo depende do desenvolvedor ou de terceiro
 | T16 | Criar o README.md | CONCLUIDA | T15 |
 | T17 | (U) AGUARDA USUÁRIO: conta GitHub, repositório vazio, cenário | CONCLUIDA | T14, T15, T16 |
 | T18 | (U) AGUARDA USUÁRIO: confirmar e enviar o código ao GitHub | CONCLUIDA | T17, T07 |
-| T19 | (U) AGUARDA USUÁRIO: ativar o GitHub Pages e verificar | PENDENTE | T18 |
+| T19 | (U) AGUARDA USUÁRIO: ativar o GitHub Pages e verificar | CONCLUIDA | T18 |
 | T20 | (U) AGUARDA USUÁRIO: subdomínio do amigo (condicional, só opção B) | CONCLUIDA | T19 |
 | T21 | (U) AGUARDA USUÁRIO: retestar no celular no endereço publicado | PENDENTE | T19 (T20) |
 | T22 | Escrever o guia de uso para o perfumista | PENDENTE | T19, T10 |

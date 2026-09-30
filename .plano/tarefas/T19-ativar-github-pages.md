@@ -31,4 +31,10 @@ O GitHub Pages serve o `index.html` do repositório como site. A ativação é f
 - O `README.md` alterado precisa de novo commit e novo envio: o executor apenas propõe; o envio só com nova confirmação explícita do desenvolvedor.
 
 ## Resultado
-(preenchido pelo executor)
+Concluída em 2026-09-30. O desenvolvedor ativou o Pages (Deploy from a branch, main, / (root)); a verificação foi feita pelo orquestrador.
+- Endereço publicado: https://rfcoder210.github.io/crm-perfumaria/
+- `curl`: HTTP 200, `Content-Type: text/html`, servido por GitHub.com; o texto "Perfumaria" aparece na página.
+- O `index.html` publicado é idêntico ao local (mesmo hash Git) e o commit do remoto é igual ao local.
+- No navegador embutido: abre em HTTPS, `localStorage` funciona, cadastro com apóstrofo e acento gravou, os dados sobreviveram a recarregar, e o aviso de backup apareceu ("Faz 20 dias...") com a data forçada. Dados de teste apagados depois. Único erro no console: 404 do `favicon.ico` (o sistema não tem ícone de aba; inofensivo).
+- Atenção (cenário 1 da auditoria): o Pages publica TODOS os arquivos do repositório, não só o sistema. `CLAUDE.md` e `docs/auditoria-publicacao.md`, por exemplo, abrem em URL pública. É o esperado nesse cenário.
+- README: o marcador foi trocado pelo endereço real. Alteração commitada localmente; o envio ao GitHub aguarda nova confirmação do desenvolvedor.

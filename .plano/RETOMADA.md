@@ -7,8 +7,8 @@ Motivo do checkpoint: fim do dia
 - Código e planejamento enviados ao GitHub (T18 concluída em 2026-09-30): origin = https://github.com/RFcoder210/crm-perfumaria. Árvore limpa. Só .plano/estado/ fica fora do Git, por decisão.
 
 ## Próxima ação (a primeira coisa a fazer)
-1. Usuário abre https://github.com/RFcoder210/crm-perfumaria no navegador e confere os arquivos (fecha a T18); depois ativa o GitHub Pages (T19): Settings > Pages > Deploy from a branch > main / (root)
-2. Executar T19 (verificar o Pages no ar) e T21 (retestar no endereço publicado, inclusive o ícone da Tela de Início)
+1. Usuário confirma no navegador que viu os arquivos no GitHub (fecha o que resta da T18); T19 concluída (Pages no ar: https://rfcoder210.github.io/crm-perfumaria/). README já traz o endereço, commitado localmente; enviar ao GitHub só com nova confirmação explícita.
+2. T21 (usuário): no iPhone, abrir o endereço publicado, adicionar à Tela de Início e repetir o teste de permanência (armário novo e vazio). Conferir também o aviso de backup.
 3. Só após T19 iniciarem T22 (guia de uso)
 4. Remover ícone de teste do iPhone (aponta para http://192.168.0.79:8000, servidor já encerrado)
 
