@@ -40,13 +40,7 @@ ok('gravou no armazenamento do navegador', !!salvo);
 ok('a venda foi criada', JSON.parse(salvo).vendas.length === 1);
 
 // Sessão 2: recarregar a página com o mesmo armazenamento
-const dom2 = new JSDOM(html, { runScripts: 'dangerously', url: 'https://exemplo.local/' });
-dom2.window.localStorage.setItem('crm-perfumes:dados', salvo);
-const dom3 = new JSDOM(html, { runScripts: 'dangerously', url: 'https://exemplo.local/' });
-dom3.window.localStorage.setItem('crm-perfumes:dados', salvo);
 // recarrega de fato: nova janela lendo o mesmo conteúdo
-const dom4 = new JSDOM(html, { runScripts: 'outside-only', url: 'https://exemplo.local/' });
-dom4.window.localStorage.setItem('crm-perfumes:dados', salvo);
 const dom5 = new JSDOM(html, {
   runScripts: 'dangerously',
   url: 'https://exemplo.local/',
