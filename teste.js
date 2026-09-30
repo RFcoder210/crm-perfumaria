@@ -107,5 +107,26 @@ clicar(doc, '[data-acao="aba"][data-aba="vendas"]');
 ok('mostra traço quando a venda não tem perfume',
   doc.querySelector('tbody tr td:nth-child(2)').textContent === '—');
 
+// Sessão 6: exportação (captura o texto que seria baixado como CSV)
+let partesCsv = null;
+dom.window.Blob = class { constructor(partes) { partesCsv = partes; } };
+dom.window.URL.createObjectURL = () => 'blob:teste';
+dom.window.URL.revokeObjectURL = () => {};
+dom.window.HTMLAnchorElement.prototype.click = () => {}; // o jsdom não baixa arquivos
+ok('o botão Exportar CSV existe', !!doc.querySelector('[data-acao="csv"]'));
+clicar(doc, '[data-acao="csv"]');
+const csv = partesCsv ? partesCsv.join('') : '';
+const linhasCsv = csv.replace(/^﻿/, '').split('\n'); // sem o BOM, para achar a linha LEADS
+const iLeads = linhasCsv.indexOf('LEADS');
+const iVendas = linhasCsv.indexOf('VENDAS');
+ok('o CSV começa com a marca UTF-8 (BOM) para o Excel', csv.startsWith('﻿'));
+ok('o CSV tem a seção LEADS', iLeads !== -1);
+ok('o CSV tem a seção VENDAS', iVendas !== -1);
+ok('o CSV preserva acento e apóstrofo', csv.includes("Márcia D'Ávila"));
+ok('o CSV usa ponto e vírgula como separador', linhasCsv[iLeads + 1].split('";"').length > 5);
+ok('o cabeçalho de leads contém Observação', linhasCsv[iLeads + 1].includes('Observação'));
+const dadosLeads = linhasCsv.slice(iLeads + 2, iVendas).filter(l => l.trim() !== '');
+ok('a seção LEADS tem 3 linhas de dados', dadosLeads.length === 3);
+
 console.log(falhas === 0 ? '\nTodos os testes passaram.' : '\n' + falhas + ' teste(s) falharam.');
 process.exit(falhas ? 1 : 0);
