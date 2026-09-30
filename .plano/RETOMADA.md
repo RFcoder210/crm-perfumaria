@@ -1,40 +1,38 @@
-# Retomada — 2026-09-30 18:26
-Motivo do checkpoint: fim do dia
+# Retomada — 2026-09-30 19:10
+Motivo do checkpoint: fim do dia (Dia 2: GitHub no ar, guia completo)
 
 ## Onde paramos
-- Última tarefa concluída: T23 — roteiro de retorno de uma semana preparado
+- Última tarefa concluída: T23 — roteiro de semana de uso (T01-T11, T14-T23 = 21 tarefas)
 - Tarefa em andamento: nenhuma
-- Código e planejamento enviados ao GitHub (T18 concluída em 2026-09-30): origin = https://github.com/RFcoder210/crm-perfumaria. Árvore limpa. Só .plano/estado/ fica fora do Git, por decisão.
+- Árvore Git limpa. Repositório no GitHub Pages, testado no iPhone (Safari + ícone) e Excel.
 
-## Próxima ação (a primeira coisa a fazer)
-1. Usuário confirma no navegador que viu os arquivos no GitHub (fecha o que resta da T18); T19 concluída (Pages no ar: https://rfcoder210.github.io/crm-perfumaria/). README já traz o endereço, commitado localmente; enviar ao GitHub só com nova confirmação explícita.
-2. T21 concluída (iPhone, endereço publicado, tudo normal). Falta conferir o aviso de backup no iPhone por volta de 07/10, durante a semana de uso; próxima tarefa de agente liberada: T22 (guia de uso).
-3. Só após T19 iniciarem T22 (guia de uso)
-4. Remover ícone de teste do iPhone (aponta para http://192.168.0.79:8000, servidor já encerrado)
+## Próxima ação
+**Nenhuma tarefa de agente liberada.** O usuário marca e realiza a entrevista (T12). Depois:
+1. T13 — registrar respostas (revisar antes de envio)
+2. T24 — entregar ao perfumista com guia
+3. T25 — acompanhar semana de uso
 
-## Pendências abertas
-- T12: entrevista com o perfumista ("GB"); roteiro em .plano/tarefas/T11-roteiro-entrevista.md
-- T13: registrar respostas da entrevista; arquivo: docs/respostas-entrevista.md (revisar antes de enviar)
-- T21: retestar no celular no endereço publicado (após T19)
-- T22: escrever guia de uso (aguarda T19, depois rever antes de enviar)
-- Backup do histórico .git antigo em ../crm-perfumaria-backup-git-2026-09-30 (contém Gmail; nunca enviar)
+## Pendências abertas (não bloqueiam)
+- Verificações no iPhone por volta de 07/10: acentuação do CSV no Numbers; passo 4 do guia (compartilhamento); 3 itens do aviso de backup (docs/TESTES.md)
+- Remover ícone de teste antigo do iPhone (192.168.0.79:8000)
 
-## Decisões tomadas (não estão em outro arquivo)
-- Endereço: opção A (GitHub Pages), URL final https://rfcoder210.github.io/crm-perfumaria/
-- Cenário de publicação: 1 (público com tudo)
-- Autoria nos commits: reescrita para 261683420+RFcoder210@users.noreply.github.com (e-mail parcial removido do histórico)
-- Proteção de dados: opção 1 (usar ícone da Tela de Início) + opção 3 (aviso de exportação)
-- Achado iPhone: ícone da Tela de Início tem armazenamento SEPARADO do Safari (abriu vazio, mas sobreviveu a fechar/abrir)
+## Decisões tomadas (Dia 2)
+- Endereço: GitHub Pages opção A
+- Cenário: repositório público com tudo
+- Autoria commits: noreply
+- Proteção: ícone Tela de Início + aviso de backup (7 dias)
+- iPhone: ícone tem armazenamento separado do Safari
+- Nomeação sessões: "Dia N · DD/MM · foco" em .plano/DIARIO.md
 
 ## Estado técnico
-- npm test: 53 verificações passando
-- Roteiro TESTES.md: 31/31 caixas marcadas em iPhone/Safari; CSV conferido no Excel
-- Aviso de backup: implementado (T10); dispara com 7 dias sem exportar ou na virada do mês; chave separada `crm-perfumes:backup`
-- Ideia registrada (não implementada): dashboard mensal (protótipo em docs/prototipo-dashboard.html; cópia em Downloads)
+- npm test: 53 passando | TESTES.md: 31/31 em iPhone
+- Aviso backup: implementado; chave `crm-perfumes:backup`
+- Protótipo dashboard: docs/prototipo-dashboard.html (não implementar agora)
+- Guia: docs/guia-do-usuario.md
 
-## Aguardando o usuário
-- T12: agendar entrevista com o perfumista
-- Depois de T19: retestar e remover ícone de teste do iPhone
+## Próxima sessão (Dia 3)
+- Usuário marca T12 (entrevista)
+- Nenhuma tarefa de agente para iniciar
 
 ## Ler se necessário
-- .plano/ESTADO.md (tabela de 28 tarefas) | .plano/tarefas/T12-usuario-entrevista.md | docs/respostas-entrevista.md
+- .plano/ESTADO.md | .plano/tarefas/T12-usuario-entrevista.md

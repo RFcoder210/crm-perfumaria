@@ -7,4 +7,4 @@ Formato do nome da sessão: `Dia N · DD/MM · foco do dia` (até uns 50 caracte
 | Dia | Data | Nome da sessão | O que foi feito |
 |---|---|---|---|
 | 1 | 2026-09-29 | Dia 1 · 29/09 · Plano e preparação | Análise do projeto, PLANO.md, 28 tarefas e preparação do ambiente. |
-| 2 | 2026-09-30 | Dia 2 · 30/09 · GitHub no ar e guia | T01 a T23 adiantadas: testes no iPhone e no Excel, aviso de backup, repositório público, Pages no ar e guia do perfumista. 20 de 28 tarefas concluídas. |
+| 2 | 2026-09-30 | Dia 2 · 30/09 · GitHub no ar e guia | Testes no iPhone (Safari e ícone) e no Excel, aviso de backup, repositório público no ar com o GitHub Pages, guia do perfumista e nomeação das sessões por dia. 21 de 28 tarefas concluídas. |
