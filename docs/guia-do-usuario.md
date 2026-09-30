@@ -87,7 +87,7 @@ Backup é uma **cópia de segurança**: como tirar foto de um caderno importante
 
 1. Abra o sistema pelo ícone.
 2. Role até o fim da tela e toque em **"Exportar CSV"**.
-3. O iPhone **abre o arquivo na tela**, no aplicativo **Numbers** (o de planilhas da Apple). Ele ainda não ficou guardado em lugar nenhum: é só a visualização.
+3. O iPhone **abre o arquivo na tela, como uma tabela**, no aplicativo **Numbers** (o de planilhas da Apple). Ele ainda não ficou guardado em lugar nenhum: é só a visualização.
 4. Para guardar uma cópia, toque no botão de **compartilhar** (o quadrado com uma seta para cima) e escolha uma destas opções: **"Salvar em Arquivos"** (de preferência no iCloud Drive) ou **enviar para você mesmo** (por WhatsApp ou e-mail). Só termine depois de fazer isso.
 
 O sistema também lembra você: aparece um aviso no topo da tela quando faz **7 dias** sem exportar, ou quando o mês vira. Toque em **"Exportar agora"**.
@@ -110,4 +110,4 @@ O sistema também lembra você: aparece um aviso no topo da tela quando faz **7 
 
 ## 8. Precisa de ajuda?
 
-Fale com o desenvolvedor: **CONTATO DO DESENVOLVEDOR**
+Fale com o desenvolvedor pelo **WhatsApp**.
