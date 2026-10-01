@@ -44,13 +44,14 @@ Sistema de controle de vendas de perfumes, com duas frentes:
 A troca de `window.storage` por `localStorage` já foi feita. Os dados ficam na chave `crm-perfumes:dados`, no formato da seção 4. O código trata três situações de erro:
 
 - navegador bloqueando o armazenamento: avisa que nada será salvo;
-- dados salvos ilegíveis: avisa e não grava por cima, para permitir recuperação;
+- dados salvos ilegíveis: avisa, não grava por cima e **recusa novos cadastros** (lead e venda), mantendo o aviso na tela, para permitir recuperação;
 - falha ao gravar: avisa e recomenda exportar o CSV.
 
 ### Pendências
 
 - **Confirmar em navegador real, no celular**, rodando o roteiro do `TESTES.md` pela primeira vez: os dados precisam sobreviver ao recarregar a página e ao fechar e reabrir o navegador. O `teste.js` simula o recarregamento, mas não substitui o teste no aparelho.
 - O `teste.js` cria três páginas que nunca usa (`dom2`, `dom3`, `dom4`). Não afetam o resultado; ficam para uma limpeza futura.
+- **Achados abertos da revisão de 01/10** (dados e celular): ver `.plano/PENDENCIAS.md`. A tarefa **T29** (`.plano/tarefas/`) trata das duas suspeitas de perda de dados e é recomendada antes da entrega.
 
 ---
 
@@ -207,7 +208,11 @@ Este projeto usa um **sistema de agentes** organizado pela pasta `.plano/`.
 - Memória durável do projeto: `.plano/` (OBJETIVO, PLANO, ESTADO, CRONOGRAMA, PENDENCIAS, RETOMADA, tarefas/). A conversa é descartável; o que importa é gravado nesses arquivos.
 - Nome das sessões: toda sessão iniciada com `/orquestrar` é nomeada `Dia N · DD/MM · foco`, e o registro dos dias fica em `.plano/DIARIO.md`. Regra pedida pelo desenvolvedor para não se perder entre as sessões.
 - Status válidos de tarefa: PENDENTE, EM_ANDAMENTO, CONCLUIDA, BLOQUEADA.
-- `.plano/estado/` é gerado por scripts (medidor de uso). Não editar manualmente.
+- `.plano/estado/` é gerado por scripts (medidor de uso). Não editar manualmente. O hook `proteger-estado.ps1` bloqueia a edição pelas ferramentas Edit e Write.
+- Automações em `.claude/` (desde 01/10; passam a valer em sessão nova):
+  - hook `testar-ao-parar.ps1`: ao fim de cada resposta, roda `npm test` se `index.html` ou `teste.js` mudaram; se falhar, devolve o erro para ser corrigido;
+  - skills `/checar-pronto` (Definição de Pronto da seção 9, sem marcar itens manuais nem commitar sozinha) e `/novo-teste` (teste novo no padrão de `teste.js` mais linha em `TESTES.md`, provando que o teste falha quando o comportamento é quebrado);
+  - agentes de só leitura `revisor-celular` (toque, rolagem, texto pequeno, linguagem) e `revisor-dados` (risco de perda de dados). Eles leem código: o que marcam como "indício" ou "suspeita" só se confirma no aparelho ou com teste.
 
 ### Ambiente
 - Windows. A ferramenta Bash usa Git Bash; comandos PowerShell também são aceitos.

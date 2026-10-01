@@ -2,7 +2,7 @@
 
 **Fase:** 6 — Entrega (recomendada antes da T24)
 **Porte:** P
-**Depende de:** nenhuma (a T29 vem de `.plano/PENDENCIAS.md`, revisão do Dia 4; a primeira pendência dessa revisão já foi resolvida no commit `1bfdc4d`)
+**Depende de:** nenhuma (a T29 vem de `.plano/PENDENCIAS.md`, revisão do Dia 3; a primeira pendência dessa revisão já foi resolvida no commit `1bfdc4d`)
 **Executor:** o desenvolvedor, com o comando `/funcionalidade` (mexe em `index.html`: plano curto e confirmação antes de editar, um commit por correção)
 
 ## Contexto mínimo
