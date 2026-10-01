@@ -54,7 +54,7 @@ A troca de `window.storage` por `localStorage` já foi feita. Os dados ficam na 
 **Em aberto:**
 
 - **Aviso de cópia de segurança, no aparelho (por volta de 07/10):** os 3 itens desmarcados do `TESTES.md` (seção "Aviso de cópia de segurança") só podem ser conferidos depois de uma semana de uso real. O jsdom cobre a lógica do aviso, mas não o iPhone.
-- **Correção do aviso com dados ilegíveis (commit `1bfdc4d`):** coberta só pelo jsdom; falta ver no aparelho e publicar. Os commits de 01/10 ainda não foram enviados ao GitHub, então a versão publicada não a contém.
+- **Correção do aviso com dados ilegíveis (commit `1bfdc4d`):** coberta pelo jsdom e já publicada no GitHub Pages (push de 01/10); falta ver no aparelho.
 - **Achados da revisão de 01/10** (dados e celular): ver `.plano/PENDENCIAS.md`. Muitos são leitura de código ("indício") e só se confirmam no celular. A tarefa **T29** (`.plano/tarefas/T29-leitura-invalida-do-armazenamento.md`) trata das duas suspeitas de perda de dados e é recomendada antes da entrega.
 - **Entrevista com o perfumista (T12):** segue sem acontecer; ver a seção 7.
 

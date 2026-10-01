@@ -4,13 +4,13 @@ Motivo do checkpoint: fim do dia (Dia 3, sem novas conclusões; seção "Pendên
 ## Onde paramos
 - Última tarefa concluída do plano: T23 (21 de 29 tarefas concluídas; a T29 é nova e está PENDENTE)
 - Tarefa em andamento: nenhuma
-- Árvore do Git limpa; tudo commitado em `main`. **Nada do trabalho da tarde foi enviado ao GitHub** (último push: `46f3975`). O GitHub Pages ainda publica a versão SEM a correção do aviso.
+- Árvore do Git limpa; tudo commitado em `main` **e enviado ao GitHub** (push `46f3975..1e06ffd`, a pedido do usuário, 14 commits). O GitHub Pages já publica a correção do aviso (conferido por `curl` na página no ar); no iPhone ela ainda não foi vista.
 
 ## Próxima ação (Dia 4, nesta ordem)
 1. **Validar os hooks e agentes novos** (só entram em sessão nova): ao fim da primeira resposta com `index.html` ou `teste.js` alterado, deve aparecer "npm test: todos os testes passaram". Conferir também que `revisor-celular`, `revisor-dados` e as skills `/checar-pronto` e `/novo-teste` aparecem como disponíveis. Se algo faltar, ver `.claude/settings.json` e `.claude/hooks/`.
 2. Perguntar: entrevista (T12) foi marcada ou já realizada? Se sim, T13; se não, ajudar a agendar.
 3. **T29** (`.plano/tarefas/T29-leitura-invalida-do-armazenamento.md`), recomendada antes da T24. Começar pelo item A. O item B exige decisão do desenvolvedor entre três saídas (segunda trava só de gravação; tratar como bloqueado e mudar a mensagem; aceitar o risco). Usar `/funcionalidade`, um commit por correção, `/novo-teste` para cada teste e `/checar-pronto` no fim.
-4. Perguntar se o desenvolvedor quer enviar ao GitHub os commits do Dia 3 (a correção do aviso só chega ao celular do perfumista depois do push e da publicação).
+4. Não é preciso perguntar do push do Dia 3: já foi feito. Os commits novos do Dia 4 só vão ao GitHub quando o usuário pedir.
 
 ## Pendências abertas
 - T12 (U): entrevista. T13 bloqueada por T12.
@@ -31,14 +31,13 @@ Motivo do checkpoint: fim do dia (Dia 3, sem novas conclusões; seção "Pendên
 ## Aguardando o usuário
 - T12: marcar e realizar a entrevista.
 - Escolha do item B da T29.
-- Decisão de enviar os commits ao GitHub.
 - Verificações no iPhone (07/10).
 
 ## Estado técnico (imutável)
 - `npm test`: 60 testes `ok`, 0 falhas (eram 53 no início do dia; +7 do cadastro com dados ilegíveis).
 - TESTES.md: 31/31 no iPhone (rodado antes da correção do aviso; o jsdom cobre a correção, o aparelho não).
 - Aviso de backup: implementado (chave `crm-perfumes:backup`).
-- GitHub Pages: ativo em RFcoder210/crm-perfumaria (versão anterior à correção).
+- GitHub Pages: ativo em RFcoder210/crm-perfumaria, já com a correção do aviso (commit `1bfdc4d`).
 - Automações novas em `.claude/`: hooks `testar-ao-parar.ps1` (Stop) e `proteger-estado.ps1` (PreToolUse em Edit e Write, bloqueia `.plano/estado/`); skills `checar-pronto` e `novo-teste`; agentes `revisor-celular` e `revisor-dados` (só leitura). Commits `e8cf806` a `150e3a8`.
 
 ## Ler se necessário (evite reler o que não precisa)
