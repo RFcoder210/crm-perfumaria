@@ -49,9 +49,14 @@ A troca de `window.storage` por `localStorage` já foi feita. Os dados ficam na 
 
 ### Pendências
 
-- **Confirmar em navegador real, no celular**, rodando o roteiro do `TESTES.md` pela primeira vez: os dados precisam sobreviver ao recarregar a página e ao fechar e reabrir o navegador. O `teste.js` simula o recarregamento, mas não substitui o teste no aparelho.
-- O `teste.js` cria três páginas que nunca usa (`dom2`, `dom3`, `dom4`). Não afetam o resultado; ficam para uma limpeza futura.
-- **Achados abertos da revisão de 01/10** (dados e celular): ver `.plano/PENDENCIAS.md`. A tarefa **T29** (`.plano/tarefas/`) trata das duas suspeitas de perda de dados e é recomendada antes da entrega.
+**Já resolvido (não refazer):** o roteiro do `TESTES.md` foi rodado no iPhone (Safari e ícone da Tela de Início) em 30/09, e os dados sobreviveram a recarregar e a fechar o navegador. O sistema está publicado no GitHub Pages (`https://rfcoder210.github.io/crm-perfumaria/`). As páginas `dom2`, `dom3` e `dom4` do `teste.js` foram removidas.
+
+**Em aberto:**
+
+- **Aviso de cópia de segurança, no aparelho (por volta de 07/10):** os 3 itens desmarcados do `TESTES.md` (seção "Aviso de cópia de segurança") só podem ser conferidos depois de uma semana de uso real. O jsdom cobre a lógica do aviso, mas não o iPhone.
+- **Correção do aviso com dados ilegíveis (commit `1bfdc4d`):** coberta só pelo jsdom; falta ver no aparelho e publicar. Os commits de 01/10 ainda não foram enviados ao GitHub, então a versão publicada não a contém.
+- **Achados da revisão de 01/10** (dados e celular): ver `.plano/PENDENCIAS.md`. Muitos são leitura de código ("indício") e só se confirmam no celular. A tarefa **T29** (`.plano/tarefas/T29-leitura-invalida-do-armazenamento.md`) trata das duas suspeitas de perda de dados e é recomendada antes da entrega.
+- **Entrevista com o perfumista (T12):** segue sem acontecer; ver a seção 7.
 
 ---
 
