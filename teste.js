@@ -65,6 +65,29 @@ const dom6 = new JSDOM(html, {
 ok('avisa quando os dados estão ilegíveis', !!dom6.window.document.querySelector('.aviso'));
 ok('não apaga dados ilegíveis', dom6.window.localStorage.getItem('crm-perfumes:dados') === '{quebrado');
 
+// dados ilegíveis: tentar cadastrar não pode esconder o aviso nem criar registro que se perde
+dom6.window.scrollTo = () => {};
+const doc6 = dom6.window.document;
+const avisoIlegivel = doc6.querySelector('.aviso').textContent;
+doc6.getElementById('l-nome').value = 'Cliente Novo';
+clicar(doc6, '[data-acao="add-lead"]');
+ok('dados ilegíveis: o aviso continua na tela ao tentar cadastrar lead',
+  !!doc6.querySelector('.aviso') && doc6.querySelector('.aviso').textContent === avisoIlegivel);
+ok('dados ilegíveis: o lead não é cadastrado', doc6.querySelectorAll('.card').length === 0);
+ok('dados ilegíveis: o nome digitado continua no formulário', doc6.getElementById('l-nome').value === 'Cliente Novo');
+doc6.getElementById('l-nome').value = '';
+clicar(doc6, '[data-acao="add-lead"]');
+ok('dados ilegíveis: sem nome, o aviso não é trocado por "informe o nome"',
+  doc6.querySelector('.aviso').textContent === avisoIlegivel);
+clicar(doc6, '[data-acao="aba"][data-aba="vendas"]');
+doc6.getElementById('v-nome').value = 'Cliente Novo';
+clicar(doc6, '[data-acao="add-venda"]');
+ok('dados ilegíveis: o aviso continua na tela ao tentar registrar venda',
+  !!doc6.querySelector('.aviso') && doc6.querySelector('.aviso').textContent === avisoIlegivel);
+ok('dados ilegíveis: a venda não é registrada', doc6.querySelectorAll('tbody tr').length === 0);
+ok('dados ilegíveis: a chave continua intacta depois das tentativas',
+  dom6.window.localStorage.getItem('crm-perfumes:dados') === '{quebrado');
+
 // Sessão 3: busca (continua na primeira página, que já tem a Márcia cadastrada)
 doc.getElementById('l-nome').value = 'Ana Telefone';
 doc.getElementById('l-tel').value = '61 97777-6666';

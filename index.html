@@ -786,6 +786,7 @@
     }
 
     if (nome === 'add-lead') {
+      if (bloqueado) { desenhar(); return; } // dados ilegíveis: não cadastra, o aviso fica na tela
       const n = val('l-nome');
       if (!n) { avisoTexto = 'Informe ao menos o nome do lead.'; desenhar(); return; }
       avisoTexto = '';
@@ -809,6 +810,7 @@
     }
 
     if (nome === 'add-venda') {
+      if (bloqueado) { desenhar(); return; } // dados ilegíveis: não cadastra, o aviso fica na tela
       const n = val('v-nome');
       if (!n) { avisoTexto = 'Informe ao menos o nome do cliente.'; desenhar(); return; }
       avisoTexto = '';
