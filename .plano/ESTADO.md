@@ -65,3 +65,4 @@ Legenda: (U) = AGUARDA USUÁRIO (o passo depende do desenvolvedor ou de terceiro
 | T26 | Consolidar o retorno e listar ajustes de campos | PENDENTE | T25 |
 | T27 | Aplicar ajustes de campos aprovados (condicional) | PENDENTE | T26 |
 | T28 | Fechamento: critérios e proposta final para o CLAUDE.md | PENDENTE | T26, T27 |
+| T29 | Tratar leitura inválida do armazenamento (JSON de formato errado e falha só na leitura). Recomendada antes da T24. Ver `tarefas/T29-leitura-invalida-do-armazenamento.md` | PENDENTE | nenhuma |

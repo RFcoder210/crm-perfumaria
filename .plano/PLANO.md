@@ -102,6 +102,7 @@ Porte: P até 30 min de agente; M até 1 h30. Nenhuma tarefa G. "(U)" marca pass
 | T22 | Escrever o guia de uso para o perfumista | M | T19, T10 |
 | T23 | Preparar o roteiro de retorno após uma semana | P | T13 (ou T11) |
 | T24 | (U) Entregar o sistema ao perfumista | M | T21, T22, T23 |
+| T29 | Tratar leitura inválida do armazenamento (JSON de formato errado e falha só na leitura). Acrescentada em 2026-10-01 a partir da revisão do `revisor-dados`; recomendada antes da T24 | P | nenhuma |
 
 ### Fase 7 — Semana de uso real e fechamento
 | ID | Tarefa | Porte | Depende de |
