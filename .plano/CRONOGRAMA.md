@@ -21,10 +21,9 @@ Não há tarefas de agente prontas para executar. A prioridade é coordenar com 
 
 ### Previsto para 07/10 (6 dias)
 Conforme RETOMADA.md, há verificações agendadas para o iPhone:
-- Acentuação do CSV no Numbers
 - Passo 4 do guia (compartilhamento)
 - 3 itens do aviso de backup (docs/TESTES.md)
-- Remover ícone de teste antigo do iPhone (192.168.0.79:8000)
+- Já feitos em 01/10: acentuação do CSV no Numbers (OK) e remoção do ícone de teste antigo do iPhone
 
 Estas ações não dependem de agente; são validações em campo.
 

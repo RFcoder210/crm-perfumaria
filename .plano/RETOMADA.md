@@ -13,8 +13,8 @@ Motivo do checkpoint: fim do dia (Dia 2: GitHub no ar, guia completo)
 3. T25 — acompanhar semana de uso
 
 ## Pendências abertas (não bloqueiam)
-- Verificações no iPhone por volta de 07/10: acentuação do CSV no Numbers; passo 4 do guia (compartilhamento); 3 itens do aviso de backup (docs/TESTES.md)
-- Remover ícone de teste antigo do iPhone (192.168.0.79:8000)
+- Verificações no iPhone por volta de 07/10: passo 4 do guia (compartilhamento); 3 itens do aviso de backup (docs/TESTES.md)
+- Feitas em 01/10 pelo usuário: acentuação do CSV no Numbers (OK); ícone de teste antigo removido do iPhone (192.168.0.79:8000)
 
 ## Decisões tomadas (Dia 2)
 - Endereço: GitHub Pages opção A
