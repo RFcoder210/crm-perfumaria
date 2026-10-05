@@ -240,5 +240,31 @@ const bloq = new JSDOM(html, {
 ok('armazenamento bloqueado: a página abre sem aviso de cópia',
   !!bloq.window.document.querySelector('h1') && !bloq.window.document.querySelector('.aviso-backup'));
 
+// JSON válido, mas de formato errado: tratado como ilegível, sem sobrescrever o original
+for (const [rotulo, conteudo] of [['objeto sem as listas', '{"clientes":[1]}'], ['lista', '[]'], ['objeto vazio', '{}'], ['número', '123']]) {
+  const domF = new JSDOM(html, {
+    runScripts: 'dangerously',
+    url: 'https://exemplo.local/',
+    beforeParse(w) { w.localStorage.setItem('crm-perfumes:dados', conteudo); }
+  });
+  domF.window.scrollTo = () => {};
+  const docF = domF.window.document;
+  ok('formato errado (' + rotulo + '): avisa que os dados estão ilegíveis', !!docF.querySelector('.aviso'));
+  docF.getElementById('l-nome').value = 'Cliente Novo';
+  clicar(docF, '[data-acao="add-lead"]');
+  ok('formato errado (' + rotulo + '): o lead não é cadastrado', docF.querySelectorAll('.card').length === 0);
+  ok('formato errado (' + rotulo + '): o conteúdo original não é perdido',
+    domF.window.localStorage.getItem('crm-perfumes:dados') === conteudo);
+}
+
+// dados antigos com só uma das listas continuam abrindo normalmente
+const domSo = new JSDOM(html, {
+  runScripts: 'dangerously',
+  url: 'https://exemplo.local/',
+  beforeParse(w) { w.localStorage.setItem('crm-perfumes:dados', JSON.stringify({ leads: [{ id: 'a', nome: 'Só Leads', etapas: {} }] })); }
+});
+ok('só com a lista de leads: abre sem aviso e mostra o lead',
+  !domSo.window.document.querySelector('.aviso') && domSo.window.document.querySelectorAll('.card').length === 1);
+
 console.log(falhas === 0 ? '\nTodos os testes passaram.' : '\n' + falhas + ' teste(s) falharam.');
 process.exit(falhas ? 1 : 0);

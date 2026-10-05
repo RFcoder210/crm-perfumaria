@@ -455,6 +455,12 @@
     if (!bruto) return; // Primeira abertura: ainda não existe registro salvo.
     try {
       const d = JSON.parse(bruto);
+      // Só aceita o formato do CRM: um objeto com pelo menos uma das duas listas.
+      // Dados antigos com só uma lista continuam abrindo; qualquer outra coisa
+      // ({}, [], 123, objeto sem leads nem vendas) é tratada como ilegível.
+      const formatoValido = d !== null && typeof d === 'object' && !Array.isArray(d)
+        && (Array.isArray(d.leads) || Array.isArray(d.vendas));
+      if (!formatoValido) throw new Error('formato inválido');
       estado.leads = Array.isArray(d.leads) ? d.leads : [];
       estado.vendas = Array.isArray(d.vendas) ? d.vendas : [];
     } catch (e) {

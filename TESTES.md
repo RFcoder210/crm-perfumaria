@@ -24,6 +24,7 @@ Execute esta lista a cada alteração, antes de publicar. Marque o que passou.
 - [x] Recarregar a página e conferir se todos os registros voltaram.
 - [x] Fechar o navegador, abrir de novo e conferir novamente.
 - [x] Conferir se as etapas marcadas continuam marcadas após recarregar.
+- [ ] Se os dados salvos estiverem num formato que o sistema não reconhece (por exemplo `{}`), o sistema avisa que estão ilegíveis, não deixa cadastrar e não apaga o que estava guardado. (Coberto no jsdom; só se simula no console do navegador.)
 
 ## Edição e exclusão
 
