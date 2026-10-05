@@ -50,4 +50,9 @@ O risco principal do projeto é perder dados do perfumista, que ficam só no nav
 - Se o desenvolvedor já tiver entregue o sistema (T24) quando esta tarefa for feita, lembrar que a correção só chega ao celular do perfumista depois da publicação no GitHub Pages.
 
 ## Resultado
-(preenchido ao terminar: o que foi feito, arquivos alterados, evidência da verificação)
+**Item A: CONCLUÍDO em 05/10/2026 (commit `85db64e`). Item B: PENDENTE, aguarda decisão do desenvolvedor (opções i, ii ou iii).**
+
+- `carregar()` em `index.html` agora só aceita um objeto (não lista, não nulo) com pelo menos uma lista `leads` ou `vendas`; o resto ativa `bloqueado` e o aviso de dados ilegíveis. Dados antigos com só uma lista continuam abrindo.
+- `teste.js`: 13 verificações novas (`{"clientes":[1]}`, `[]`, `{}`, `123`: avisa, não cadastra, original intacto; e compatibilidade com só `leads`). `TESTES.md`: uma linha nova, desmarcada, em "Permanência dos dados".
+- Evidência: com o código antigo, 12 verificações novas falharam; com a correção, `npm test` passa inteiro (73 ok, 0 falhas), incluindo os testes antigos sem alteração.
+- Fica para depois: `/checar-pronto` e releitura do `revisor-dados` (só valem quando o item B estiver resolvido); conferência no celular.
