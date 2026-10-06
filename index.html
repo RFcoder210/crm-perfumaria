@@ -449,7 +449,10 @@
     try {
       bruto = localStorage.getItem(CHAVE);
     } catch (e) {
-      avisoTexto = 'Este navegador está bloqueando o armazenamento de dados. O sistema funciona, mas nada será salvo. Verifique se a navegação anônima está ativada.';
+      // Se a leitura falhou, os dados que já existem podem estar guardados e intactos.
+      // Cadastrar agora e gravar poderia apagá-los, então o sistema não deixa cadastrar.
+      avisoTexto = 'Não foi possível ler os dados salvos neste navegador. Por segurança, o sistema não deixa cadastrar nada agora, para não apagar o que já está guardado. Feche e abra o sistema de novo. Se o aviso continuar, verifique se a navegação anônima está ativada.';
+      bloqueado = true;
       return;
     }
     if (!bruto) return; // Primeira abertura: ainda não existe registro salvo.

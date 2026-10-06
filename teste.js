@@ -266,5 +266,38 @@ const domSo = new JSDOM(html, {
 ok('só com a lista de leads: abre sem aviso e mostra o lead',
   !domSo.window.document.querySelector('.aviso') && domSo.window.document.querySelectorAll('.card').length === 1);
 
+// falha só na leitura (getItem lança erro) com dados já salvos e gravação funcionando:
+// o sistema avisa, não deixa cadastrar e não grava por cima do que estava guardado
+const guardados = JSON.stringify({ leads: [{ id: 'x1', nome: 'Cliente Antigo', etapas: {} }], vendas: [] });
+let armazLeit; // o armazenamento de verdade, por trás do que só falha na leitura
+const domLeit = new JSDOM(html, {
+  runScripts: 'dangerously',
+  url: 'https://exemplo.local/',
+  beforeParse(w) {
+    const real = armazLeit = w.localStorage;
+    real.setItem('crm-perfumes:dados', guardados);
+    Object.defineProperty(w, 'localStorage', {
+      value: {
+        getItem() { throw new Error('falha só na leitura'); },
+        setItem: (k, v) => real.setItem(k, v),
+        removeItem: (k) => real.removeItem(k)
+      }
+    });
+  }
+});
+domLeit.window.scrollTo = () => {};
+const docLeit = domLeit.window.document;
+const avisoLeit = docLeit.querySelector('.aviso') ? docLeit.querySelector('.aviso').textContent : '';
+ok('falha só na leitura: avisa que não dá para cadastrar', avisoLeit.includes('não deixa cadastrar'));
+docLeit.getElementById('l-nome').value = 'Cliente Novo';
+clicar(docLeit, '[data-acao="add-lead"]');
+ok('falha só na leitura: o lead não é cadastrado', docLeit.querySelectorAll('.card').length === 0);
+ok('falha só na leitura: o aviso continua na tela', !!docLeit.querySelector('.aviso') && docLeit.querySelector('.aviso').textContent === avisoLeit);
+clicar(docLeit, '[data-acao="aba"][data-aba="vendas"]');
+docLeit.getElementById('v-nome').value = 'Cliente Novo';
+clicar(docLeit, '[data-acao="add-venda"]');
+ok('falha só na leitura: a venda não é registrada', docLeit.querySelectorAll('tbody tr').length === 0);
+ok('falha só na leitura: os dados guardados não são sobrescritos', armazLeit.getItem('crm-perfumes:dados') === guardados);
+
 console.log(falhas === 0 ? '\nTodos os testes passaram.' : '\n' + falhas + ' teste(s) falharam.');
 process.exit(falhas ? 1 : 0);

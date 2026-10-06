@@ -25,6 +25,7 @@ Execute esta lista a cada alteração, antes de publicar. Marque o que passou.
 - [x] Fechar o navegador, abrir de novo e conferir novamente.
 - [x] Conferir se as etapas marcadas continuam marcadas após recarregar.
 - [ ] Se os dados salvos estiverem num formato que o sistema não reconhece (por exemplo `{}`), o sistema avisa que estão ilegíveis, não deixa cadastrar e não apaga o que estava guardado. (Coberto no jsdom; só se simula no console do navegador.)
+- [ ] Se o navegador não conseguir ler os dados salvos (leitura falha, mesmo com dados guardados), o sistema avisa que não deixa cadastrar nada por enquanto e não apaga o que estava guardado. (Coberto no jsdom; no aparelho só se vê em situação real de falha, por exemplo navegação anônima com armazenamento bloqueado.)
 
 ## Edição e exclusão
 
