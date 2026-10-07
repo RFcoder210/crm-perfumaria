@@ -1,50 +1,45 @@
-# Retomada — 2026-10-01 19:51
-Motivo do checkpoint: fim do dia (Dia 3, 2026-10-01), segunda execução do /encerrar-dia.
+# Retomada — 2026-10-06 21:06
+Motivo do checkpoint: encerramento do dia (Dia 5, 06/10; dia curto a pedido do desenvolvedor)
 
 ## Onde paramos
-- Última tarefa concluída do plano: T23 (21 de 29 tarefas concluídas; a T29 é nova e está PENDENTE)
+- Última tarefa concluída: T29 (22 de 29 tarefas)
 - Tarefa em andamento: nenhuma
-- Árvore do Git limpa; tudo commitado em `main` **e enviado ao GitHub** (push `46f3975..1e06ffd`, a pedido do usuário, 14 commits). O GitHub Pages já publica a correção do aviso (conferido por `curl` na página no ar); no iPhone ela ainda não foi vista.
+- Arquivos alterados sem commit: `.plano/CRONOGRAMA.md`, `.plano/DIARIO.md`, `.plano/ESTADO.md`, `.plano/PENDENCIAS.md`, `docs/entrevista-site.md`
 
-## Próxima ação (Dia 4, nesta ordem)
-1. **Validar os hooks e agentes novos** (só entram em sessão nova): ao fim da primeira resposta com `index.html` ou `teste.js` alterado, deve aparecer "npm test: todos os testes passaram". Conferir também que `revisor-celular`, `revisor-dados` e as skills `/checar-pronto` e `/novo-teste` aparecem como disponíveis. Se algo faltar, ver `.claude/settings.json` e `.claude/hooks/`.
-2. Perguntar: entrevista (T12) foi marcada ou já realizada? Se sim, T13; se não, ajudar a agendar.
-3. **T29** (`.plano/tarefas/T29-leitura-invalida-do-armazenamento.md`), recomendada antes da T24. Começar pelo item A. O item B exige decisão do desenvolvedor entre três saídas (segunda trava só de gravação; tratar como bloqueado e mudar a mensagem; aceitar o risco). Usar `/funcionalidade`, um commit por correção, `/novo-teste` para cada teste e `/checar-pronto` no fim.
-4. Não é preciso perguntar do push do Dia 3: já foi feito. Os commits novos do Dia 4 só vão ao GitHub quando o usuário pedir.
+## Próxima ação (Dia 6, nesta ordem)
+1. **iPhone (07/10):** passo 4 do guia (compartilhamento) + 3 itens do aviso de backup. Preparar checklist de verificação hoje.
+2. **Corrigir CSV vazio:** com dados bloqueados, "Exportar CSV" gera arquivo vazio e marca como feito (falsa segurança). Usar `/novo-teste` e pequeno commit.
+3. **Entrevista T12:** segunda tentativa de agendamento. T13 e T24 desembaraçadas dela.
+4. **Texto de CLAUDE.md:** seção 3 desatualizada (bloqueio agora cobre navegador sem armazenamento E leitura que falha). Propor antes de editar.
 
 ## Pendências abertas
-- T12 (U): entrevista. T13 bloqueada por T12.
-- T24 (U): entregar; T25 a T28 bloqueadas por T24.
-- **T29**: item A (JSON de formato errado) e item B (leitura que falha, com armadilha de interação com a trava de cadastro).
-- `.plano/PENDENCIAS.md`: 11 entradas abertas da revisão de 01/10 (1 resolvida). Resumo: dados (conversão em venda, exportação com dados bloqueados, "Apagar tudo"), celular (botões `.mini` pequenos, tabela de vendas com coluna Ações fora da tela, rótulos do funil de 8,5 a 9,5 px, outros alvos abaixo de 44 px, textos de 10 a 11 px) e lacunas de cobertura do `teste.js`. São leituras de código: o que for "indício" só se confirma no celular.
-- Verificações no iPhone (por volta de 07/10): passo 4 do guia (compartilhamento) e 3 itens do aviso de backup.
-- `CLAUDE.md`, seção 8 ainda desatualizada (fora do que foi pedido hoje): item 1 diz "falta confirmar no celular" (já confirmado em 30/09) e item 3 diz "publicação pendente" (o Pages está no ar). Propor o texto novo ao desenvolvedor antes de editar. A seção "Pendências" (seção 3) foi reescrita hoje, commit `6a6870d`.
+- T12 (U): entrevista não realizada 05/10; segue como PENDENTE. Desbloqueia T13, T24, T25, T26, T27, T28.
+- T24 (U): entrega. Aguarda T22, T23 e resultado de T12 e T29.
+- T25 (U): acompanhar semana de uso. Bloqueada por T24.
+- **CSV vazio com bloqueado:** `index.html:508-511`, `885-906`. Gera arquivo vazio e marca backup como feito.
+- **Domínio gbparfum.com:** acesso perdido (senha do Nicolas inválida). Falta saber registro e validade. Define endereço definitivo do CRM.
+- **4 achados novos** (revisor-dados pós-T29-B): lead sem `etapas`, lista com tipo errado, data vazia e "Apagar tudo" com bloqueado. Registrados em `.plano/PENDENCIAS.md`, linhas 21-25.
 
-## Decisões tomadas (Dia 3)
-- Processo: PR não é usado; commits direto na `main`; push só quando o usuário pedir.
-- **Dados ilegíveis (opção A, commit `1bfdc4d`):** com `bloqueado`, o sistema RECUSA cadastrar lead e venda; o aviso fica na tela e o texto digitado fica no formulário. Escolhida porque cadastrar "só na tela" perde trabalho em silêncio.
-- **Hook de testes no fim da resposta (evento Stop), não a cada edição.** Roda `npm test` só se `index.html` ou `teste.js` mudaram (hash em `.plano/estado/ultimo-teste.txt`). Leva cerca de 2 s dentro do hook; se a falha persistir, não insiste (`stop_hook_active`).
-- Playwright MCP (item 7 das automações) **adiado**; o navegador embutido do app tem preset de celular (375×812) e serve para conferências simples. O Playwright é o item 5 da ordem de trabalho do CLAUDE.md.
-- `/checar-pronto` e `/novo-teste` nunca marcam itens manuais do `TESTES.md` nem commitam sem confirmação.
-- A numeração dos dias vem do `DIARIO.md`: 01/10 foi o Dia 3, amanhã é o Dia 4. (Mensagens de commit antigas que dizem "Dia 5" ou "D4" estão erradas e não serão reescritas.)
+## Decisões tomadas (Dia 5)
+- **T29 item B (opção ii):** falha só de leitura agora marca `bloqueado`, recusa cadastro e mensagem diz "não dá para cadastrar". Commits `09e006e` e `6b09f36`, +5 verificações no `teste.js` (totalizando 73 passando).
+- **Site:** não reaproveitar antigo; novo do zero. Vitrine depois loja. Aguarda acesso ao domínio registrado.
 
 ## Aguardando o usuário
-- T12: marcar e realizar a entrevista.
-- Escolha do item B da T29.
-- Verificações no iPhone (07/10).
+- **T12:** agendamento efetivo da entrevista (segunda tentativa).
+- **Verificações 07/10:** compartilhamento e aviso de backup no iPhone.
+- **Domínio:** acesso ao registro e informações de validade do gbparfum.com.
 
-## Estado técnico (imutável)
-- `npm test`: 60 testes `ok`, 0 falhas (eram 53 no início do dia; +7 do cadastro com dados ilegíveis).
-- TESTES.md: 31/31 no iPhone (rodado antes da correção do aviso; o jsdom cobre a correção, o aparelho não).
-- Aviso de backup: implementado (chave `crm-perfumes:backup`).
-- GitHub Pages: ativo em RFcoder210/crm-perfumaria, já com a correção do aviso (commit `1bfdc4d`).
-- Automações novas em `.claude/`: hooks `testar-ao-parar.ps1` (Stop) e `proteger-estado.ps1` (PreToolUse em Edit e Write, bloqueia `.plano/estado/`); skills `checar-pronto` e `novo-teste`; agentes `revisor-celular` e `revisor-dados` (só leitura). Commits `e8cf806` a `150e3a8`.
+## Estado técnico
+- npm test: 78 testes passando (73 + 5 da T29, item B) (dados ilegíveis com JSON errado e leitura que falha).
+- TESTES.md: 31/31 em iPhone (30/09).
+- GitHub Pages: ativo; publica até commit `1bfdc4d` (sem push de 05/06/10).
+- Hooks e agentes: ativados (testar-ao-parar, proteger-estado, /checar-pronto, /novo-teste, revisor-celular, revisor-dados).
 
-## Ler se necessário (evite reler o que não precisa)
-- `.plano/tarefas/T29-leitura-invalida-do-armazenamento.md`: a tarefa do dia, com tudo que ela exige.
-- `.plano/PENDENCIAS.md`: achados com arquivo e linha. O `index.html` tem cerca de 940 linhas: ler só os trechos citados (`carregar()` ~447, `salvar()` ~466, `acao()` ~780) em vez do arquivo inteiro.
-- `.plano/ESTADO.md` (tabela de 29 tarefas) e `.plano/CRONOGRAMA.md` (do Dia 3; refazer no início do Dia 4).
-- `teste.js`: bloco dos dados ilegíveis (~59-90) e `paginaEm()` (~132), que controla a data.
+## Ler se necessário (não ler por padrão)
+- `.plano/tarefas/T29-leitura-invalida-do-armazenamento.md` (fechada; só referência)
+- `.plano/PENDENCIAS.md` linhas 21-25 (4 achados novos pós-T29-B)
+- `docs/entrevista-site.md` (respostas do Giordano; falta pergunta 3 dele e acesso ao domínio)
+- `.plano/ESTADO.md` linha 68 (T29 CONCLUIDA) e linhas 51-68 (tarefas bloqueadas por T12 e T24)
 
-## Consumo
-- Medidor não ativado nesta sessão
+## Consumo no momento do checkpoint
+- Medidor de uso não ativado nesta sessão
